@@ -7,13 +7,13 @@ const MainLayout = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const navLinks = [
-        { name: 'Who We Are', href: '/#who-we-are' },
-        { name: 'Mission & Vision', href: '/#mission' },
-        { name: 'What We Do', href: '/#what-we-do' },
-        { name: 'Team', href: '/#team' },
-        { name: 'Gallery', href: '/#gallery' },
+        { name: 'Our Story', href: '/#who-we-are' },
+        { name: 'Purpose', href: '/#mission' },
+        { name: 'Programs', href: '/#what-we-do' },
+        { name: 'Mentors', href: '/#team' },
+        { name: 'Masterpieces', href: '/#gallery' },
         { name: 'Workshops', href: '/#workshops' },
-        { name: 'Testimonials', href: '/#testimonials' },
+        { name: 'Community', href: '/#testimonials' },
     ];
 
     return (
