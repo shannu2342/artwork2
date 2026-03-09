@@ -18,7 +18,7 @@ const MainLayout = () => {
     return (
         <div className="flex flex-col min-h-[100dvh]">
             {/* Navigation */}
-            <nav className="fixed w-full z-50 bg-white shadow-sm">
+            <nav className="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-100">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-20">
                         <div className="flex items-center">
@@ -31,12 +31,14 @@ const MainLayout = () => {
                         {/* Desktop Menu */}
                         <div className="hidden md:flex md:items-center md:space-x-8">
                             {navLinks.map((link) => (
-                                <a key={link.name} href={link.href} className="text-[#2C3E50] hover:text-[#D4AF37] px-3 py-2 text-sm font-medium transition-colors">
+                                <a key={link.name} href={link.href} className="relative text-[#2C3E50] font-semibold text-sm transition-colors group px-1 py-2">
                                     {link.name}
+                                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] transition-all duration-300 group-hover:w-full"></span>
                                 </a>
                             ))}
-                            <Link to="/register" className="bg-[#F9D423] text-black hover:bg-[#D4AF37] px-6 py-2 rounded-full font-bold transition-colors shadow-md">
-                                Register
+                            <Link to="/register" className="ml-4 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] text-[#1a252f] hover:shadow-lg hover:shadow-[#D4AF37]/30 hover:-translate-y-0.5 px-7 py-2.5 rounded-full font-bold transition-all duration-300 transform shadow-md relative overflow-hidden group">
+                                <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-10"></span>
+                                <span className="relative">Register</span>
                             </Link>
                         </div>
 
@@ -93,15 +95,19 @@ const MainLayout = () => {
             </main>
 
             {/* Footer */}
-            <footer className="bg-[#2C3E50] text-white py-12 text-center md:text-left">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <footer className="bg-gradient-to-b from-[#2C3E50] to-[#1a252f] text-white py-16 text-center md:text-left relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-50"></div>
+
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-8">
                         <div>
-                            <div className="flex items-center justify-center md:justify-start mb-4">
-                                <img className="h-10 w-auto bg-white p-1 rounded-full" src="/logo.jpg" alt="Limitless Art Logo" />
-                                <span className="ml-3 text-xl font-bold text-[#D4AF37]">Limitless Art</span>
+                            <div className="flex items-center justify-center md:justify-start mb-6">
+                                <div className="p-1.5 bg-white/10 rounded-full backdrop-blur-sm mr-4">
+                                    <img className="h-12 w-auto bg-white p-1 rounded-full" src="/logo.jpg" alt="Limitless Art Logo" />
+                                </div>
+                                <span className="text-2xl font-black text-[#D4AF37] tracking-wider">Limitless Art</span>
                             </div>
-                            <p className="text-gray-300">Empowering specially-abled children through art and skill development.</p>
+                            <p className="text-gray-300 leading-relaxed max-w-sm mx-auto md:mx-0">Empowering specially-abled children through art, creativity, and skill development in a safe, nurturing environment.</p>
                         </div>
                         <div>
                             <h3 className="text-lg font-bold mb-4 border-b border-[#D4AF37] pb-2 inline-block">Quick Links</h3>

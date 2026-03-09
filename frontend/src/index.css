@@ -1,19 +1,21 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 
 @theme {
   --color-primary: #D4AF37;
   --color-secondary: #2C3E50;
   --color-accent: #F9D423;
-  --font-sans: 'Montserrat', 'Inter', system-ui, sans-serif;
+  --font-sans: 'Outfit', 'Inter', system-ui, sans-serif;
   --color-background-alt: #f8fafc;
 }
 
 body {
   font-family: var(--font-sans);
-  background-color: #ffffff;
+  background-color: #fafbfc;
   color: var(--color-secondary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 /* Form elements reset for consistent cross-browser UI */

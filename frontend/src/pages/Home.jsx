@@ -98,65 +98,112 @@ const Home = () => {
             </section>
 
             {/* Mission & Vision */}
-            <section id="mission" className="py-20 bg-[#2C3E50] text-white">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <section id="mission" className="py-24 bg-[#1a252f] text-white relative overflow-hidden">
+                {/* Background decorative elements */}
+                <div className="absolute top-0 left-0 w-64 h-64 bg-[#D4AF37] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+                <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#F9D423] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '1s' }}></div>
+
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-                        <div className="bg-white/10 p-10 rounded-2xl backdrop-blur-sm border border-white/20">
-                            <h2 className="text-3xl font-bold text-[#D4AF37] mb-6 flex items-center">
-                                <Heart className="mr-4 w-8 h-8" /> Our Mission
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8 }}
+                            className="bg-white/5 p-12 rounded-3xl backdrop-blur-md border border-white/10 relative group overflow-hidden"
+                        >
+                            <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-[#F9D423] to-[#D4AF37]"></div>
+                            <h2 className="text-3xl font-black text-[#D4AF37] mb-6 flex items-center">
+                                <Heart className="mr-5 w-10 h-10 group-hover:scale-125 transition-transform duration-500" /> Our Mission
                             </h2>
-                            <p className="text-lg leading-relaxed">
+                            <p className="text-xl leading-relaxed font-light text-gray-200">
                                 To empower specially-abled children by developing artistic skills, confidence and independence through structured, compassionate art education.
                             </p>
-                        </div>
-                        <div className="bg-white/10 p-10 rounded-2xl backdrop-blur-sm border border-white/20">
-                            <h2 className="text-3xl font-bold text-[#D4AF37] mb-6 flex items-center">
-                                <Star className="mr-4 w-8 h-8" /> Our Vision
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8 }}
+                            className="bg-white/5 p-12 rounded-3xl backdrop-blur-md border border-white/10 relative group overflow-hidden"
+                        >
+                            <div className="absolute top-0 right-0 w-2 h-full bg-gradient-to-b from-[#D4AF37] to-[#F9D423]"></div>
+                            <h2 className="text-3xl font-black text-[#D4AF37] mb-6 flex items-center">
+                                <Star className="mr-5 w-10 h-10 group-hover:scale-125 transition-transform duration-500" /> Our Vision
                             </h2>
-                            <p className="text-lg leading-relaxed">
+                            <p className="text-xl leading-relaxed font-light text-gray-200">
                                 To build a global inclusive platform where specially-abled artists can learn, grow, showcase their talent, and earn from their creativity.
                             </p>
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
             </section>
 
             {/* What We Do */}
-            <section id="what-we-do" className="py-20 bg-gray-50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-bold text-[#2C3E50] mb-4">What We Do</h2>
-                        <div className="w-24 h-1 bg-[#D4AF37] mx-auto rounded-full mb-8"></div>
-                        <p className="text-xl text-gray-600 max-w-3xl mx-auto">We use interest-based learning that adapts to each child’s comfort and strengths, blending technical skill training with emotional support.</p>
+            <section id="what-we-do" className="py-24 bg-gray-50 relative">
+                <div className="absolute top-40 left-0 w-32 h-32 bg-[#D4AF37]/10 rounded-full blur-2xl"></div>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="text-center mb-20">
+                        <motion.h2
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-5xl font-black text-[#2C3E50] mb-6"
+                        >
+                            What We Do
+                        </motion.h2>
+                        <div className="w-32 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#F9D423] mx-auto rounded-full mb-8"></div>
+                        <p className="text-xl text-gray-600 max-w-3xl mx-auto font-light">We use interest-based learning that adapts to each child’s comfort and strengths, blending technical skill training with emotional support.</p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                         {/* Program 1 */}
-                        <div className="bg-white rounded-2xl shadow-md p-8 hover:-translate-y-2 transition duration-300">
-                            <div className="bg-[#D4AF37]/20 w-16 h-16 rounded-full flex items-center justify-center mb-6">
-                                <Palette className="w-8 h-8 text-[#D4AF37]" />
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.1 }}
+                            className="bg-white rounded-3xl shadow-xl p-10 hover:-translate-y-3 transition-transform duration-500 border border-gray-100 group relative overflow-hidden"
+                        >
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                            <div className="bg-gradient-to-br from-[#F9D423]/20 to-[#D4AF37]/10 w-20 h-20 rounded-2xl flex items-center justify-center mb-8 group-hover:rotate-12 transition-transform duration-500">
+                                <Palette className="w-10 h-10 text-[#D4AF37]" />
                             </div>
-                            <h3 className="text-2xl font-bold text-[#2C3E50] mb-4">Art Workshops</h3>
-                            <p className="text-gray-600">Short, hands-on sessions focusing on creativity, engagement and confidence building.</p>
-                        </div>
+                            <h3 className="text-2xl font-black text-[#2C3E50] mb-4">Art Workshops</h3>
+                            <p className="text-gray-600 leading-relaxed font-light">Short, hands-on sessions focusing on creativity, engagement and confidence building through practical artistic tasks.</p>
+                        </motion.div>
 
                         {/* Program 2 */}
-                        <div className="bg-white rounded-2xl shadow-md p-8 hover:-translate-y-2 transition duration-300">
-                            <div className="bg-[#D4AF37]/20 w-16 h-16 rounded-full flex items-center justify-center mb-6">
-                                <BookOpen className="w-8 h-8 text-[#D4AF37]" />
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="bg-white rounded-3xl shadow-xl p-10 hover:-translate-y-3 transition-transform duration-500 border border-gray-100 group relative overflow-hidden"
+                        >
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                            <div className="bg-gradient-to-br from-[#F9D423]/20 to-[#D4AF37]/10 w-20 h-20 rounded-2xl flex items-center justify-center mb-8 group-hover:-rotate-12 transition-transform duration-500">
+                                <BookOpen className="w-10 h-10 text-[#D4AF37]" />
                             </div>
-                            <h3 className="text-2xl font-bold text-[#2C3E50] mb-4">Structured Courses</h3>
-                            <p className="text-gray-600">Progressive modules that teach drawing, painting and craft skills in accessible formats.</p>
-                        </div>
+                            <h3 className="text-2xl font-black text-[#2C3E50] mb-4">Structured Courses</h3>
+                            <p className="text-gray-600 leading-relaxed font-light">Progressive modules that teach drawing, painting and craft skills in highly accessible, adaptable formats for every child.</p>
+                        </motion.div>
 
                         {/* Program 3 */}
-                        <div className="bg-white rounded-2xl shadow-md p-8 hover:-translate-y-2 transition duration-300">
-                            <div className="bg-[#D4AF37]/20 w-16 h-16 rounded-full flex items-center justify-center mb-6">
-                                <Users className="w-8 h-8 text-[#D4AF37]" />
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.3 }}
+                            className="bg-white rounded-3xl shadow-xl p-10 hover:-translate-y-3 transition-transform duration-500 border border-gray-100 group relative overflow-hidden"
+                        >
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                            <div className="bg-gradient-to-br from-[#F9D423]/20 to-[#D4AF37]/10 w-20 h-20 rounded-2xl flex items-center justify-center mb-8 group-hover:rotate-12 transition-transform duration-500">
+                                <Users className="w-10 h-10 text-[#D4AF37]" />
                             </div>
-                            <h3 className="text-2xl font-bold text-[#2C3E50] mb-4">Psychological Support</h3>
-                            <p className="text-gray-600">Ongoing emotional and behavioural guidance to make learning comfortable and confidence-focused.</p>
-                        </div>
+                            <h3 className="text-2xl font-black text-[#2C3E50] mb-4">Psychological Support</h3>
+                            <p className="text-gray-600 leading-relaxed font-light">Ongoing emotional and behavioural guidance to make learning comfortable, focused, and confidence-building.</p>
+                        </motion.div>
                     </div>
                 </div>
             </section>
