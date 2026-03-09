@@ -15,7 +15,6 @@ body {
   color: var(--color-secondary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
 /* Form elements reset for consistent cross-browser UI */

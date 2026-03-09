@@ -13,6 +13,7 @@ const MainLayout = () => {
         { name: 'Team', href: '/#team' },
         { name: 'Gallery', href: '/#gallery' },
         { name: 'Workshops', href: '/#workshops' },
+        { name: 'Testimonials', href: '/#testimonials' },
     ];
 
     return (
