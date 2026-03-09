@@ -63,35 +63,53 @@ const Home = () => {
             </section>
 
             {/* Who We Are */}
-            <section id="who-we-are" className="py-20 bg-white">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <section id="who-we-are" className="py-24 bg-white relative overflow-hidden">
+                <div className="absolute -top-40 -right-40 w-96 h-96 bg-[#D4AF37]/5 rounded-full blur-3xl"></div>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl font-bold text-[#2C3E50] mb-4">Who We Are</h2>
-                        <div className="w-24 h-1 bg-[#D4AF37] mx-auto rounded-full"></div>
+                        <motion.h2
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-4xl md:text-5xl font-black text-[#2C3E50] mb-4"
+                        >
+                            Who We Are
+                        </motion.h2>
+                        <div className="w-24 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#F9D423] mx-auto rounded-full"></div>
                     </div>
-                    <div className="bg-gray-50 rounded-2xl p-8 md:p-12 shadow-sm border border-gray-100 flex flex-col md:flex-row gap-12 items-center">
-                        <div className="w-full md:w-1/2">
-                            <p className="text-lg text-gray-700 leading-relaxed text-justify">
+                    <div className="bg-gray-50 rounded-[2.5rem] p-8 md:p-12 shadow-sm border border-gray-100 flex flex-col lg:flex-row gap-12 items-center">
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8 }}
+                            className="w-full lg:w-1/2"
+                        >
+                            <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-light">
                                 Limitless Art is an inclusive organisation dedicated to nurturing the abilities of specially-abled children through art and practical skill learning. We identify each child's interests and tailor experiences that build creative competence, emotional resilience, and practical abilities. Our supportive environment encourages self-expression, independence and pathways to meaningful opportunities.
                             </p>
-                        </div>
-                        <div className="w-full md:w-1/2 grid grid-cols-2 gap-6">
-                            <div className="bg-white p-6 rounded-xl shadow border border-gray-100 flex flex-col items-center text-center">
-                                <Palette className="w-12 h-12 text-[#D4AF37] mb-3" />
-                                <h4 className="font-bold text-[#2C3E50]">Creative Outlets</h4>
-                            </div>
-                            <div className="bg-white p-6 rounded-xl shadow border border-gray-100 flex flex-col items-center text-center">
-                                <Shield className="w-12 h-12 text-[#D4AF37] mb-3" />
-                                <h4 className="font-bold text-[#2C3E50]">Safe Space</h4>
-                            </div>
-                            <div className="bg-white p-6 rounded-xl shadow border border-gray-100 flex flex-col items-center text-center">
-                                <Star className="w-12 h-12 text-[#D4AF37] mb-3" />
-                                <h4 className="font-bold text-[#2C3E50]">Skill Building</h4>
-                            </div>
-                            <div className="bg-white p-6 rounded-xl shadow border border-gray-100 flex flex-col items-center text-center">
-                                <Heart className="w-12 h-12 text-[#D4AF37] mb-3" />
-                                <h4 className="font-bold text-[#2C3E50]">Emotional Support</h4>
-                            </div>
+                        </motion.div>
+                        <div className="w-full lg:w-1/2 grid grid-cols-2 gap-6">
+                            {[
+                                { icon: Palette, title: 'Creative Outlets', delay: 0.1 },
+                                { icon: Shield, title: 'Safe Space', delay: 0.2 },
+                                { icon: Star, title: 'Skill Building', delay: 0.3 },
+                                { icon: Heart, title: 'Emotional Support', delay: 0.4 }
+                            ].map((item, idx) => (
+                                <motion.div
+                                    key={idx}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: item.delay, duration: 0.5 }}
+                                    className="bg-white p-6 rounded-2xl shadow-md border border-gray-100 flex flex-col items-center text-center hover:-translate-y-2 transition-transform duration-300 group"
+                                >
+                                    <div className="bg-[#f8fafc] w-16 h-16 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                                        <item.icon className="w-8 h-8 text-[#D4AF37]" />
+                                    </div>
+                                    <h4 className="font-bold text-[#2C3E50]">{item.title}</h4>
+                                </motion.div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -209,43 +227,68 @@ const Home = () => {
             </section>
 
             {/* Team */}
-            <section id="team" className="py-20 bg-white">
+            <section id="team" className="py-24 bg-white relative">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-bold text-[#2C3E50] mb-4">About Our Team</h2>
-                        <div className="w-24 h-1 bg-[#D4AF37] mx-auto rounded-full"></div>
+                    <div className="text-center mb-20">
+                        <motion.h2
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-4xl md:text-5xl font-black text-[#2C3E50] mb-4"
+                        >
+                            About Our Team
+                        </motion.h2>
+                        <div className="w-24 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#F9D423] mx-auto rounded-full"></div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                         {/* Founder */}
-                        <div className="text-center group">
-                            <div className="w-40 h-40 mx-auto bg-gray-200 rounded-full mb-6 overflow-hidden border-4 border-[#D4AF37] shadow-lg group-hover:scale-105 transition duration-300">
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.1 }}
+                            className="text-center group bg-gray-50 rounded-3xl p-8 hover:bg-white hover:shadow-2xl transition-all duration-500 border border-transparent hover:border-gray-100"
+                        >
+                            <div className="w-40 h-40 mx-auto bg-gray-200 rounded-full mb-6 overflow-hidden border-4 border-[#D4AF37] shadow-lg group-hover:scale-110 group-hover:border-[#F9D423] transition-all duration-500">
                                 <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=Parul&backgroundColor=D4AF37`} alt="Founder" className="w-full h-full object-cover" />
                             </div>
-                            <h3 className="text-2xl font-bold text-[#2C3E50]">Parul Phoughat</h3>
-                            <p className="text-[#D4AF37] font-semibold mb-4">Founder</p>
-                            <p className="text-gray-600 px-4">Leads vision, designs curriculum, and manages partnerships and program development.</p>
-                        </div>
+                            <h3 className="text-2xl font-black text-[#2C3E50] mb-1">Parul Phoughat</h3>
+                            <p className="text-[#D4AF37] font-bold mb-4 uppercase tracking-wider text-sm">Founder</p>
+                            <p className="text-gray-600 font-light">Leads vision, designs curriculum, and manages partnerships and program development.</p>
+                        </motion.div>
 
                         {/* Art Teacher */}
-                        <div className="text-center group">
-                            <div className="w-40 h-40 mx-auto bg-gray-200 rounded-full mb-6 overflow-hidden border-4 border-[#2C3E50] shadow-lg group-hover:scale-105 transition duration-300">
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="text-center group bg-gray-50 rounded-3xl p-8 hover:bg-white hover:shadow-2xl transition-all duration-500 border border-transparent hover:border-gray-100"
+                        >
+                            <div className="w-40 h-40 mx-auto bg-gray-200 rounded-full mb-6 overflow-hidden border-4 border-[#2C3E50] shadow-lg group-hover:scale-110 transition-all duration-500">
                                 <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=Teacher&backgroundColor=2C3E50`} alt="Art Teacher" className="w-full h-full object-cover" />
                             </div>
-                            <h3 className="text-2xl font-bold text-[#2C3E50]">Art Educators</h3>
-                            <p className="text-[#D4AF37] font-semibold mb-4">Specialized Teachers</p>
-                            <p className="text-gray-600 px-4">Deliver workshops, adapt techniques for accessibility, and mentor students in creative skills.</p>
-                        </div>
+                            <h3 className="text-2xl font-black text-[#2C3E50] mb-1">Art Educators</h3>
+                            <p className="text-[#2C3E50] font-bold mb-4 uppercase tracking-wider text-sm">Specialized Teachers</p>
+                            <p className="text-gray-600 font-light">Deliver workshops, adapt techniques for accessibility, and mentor students in creative skills.</p>
+                        </motion.div>
 
                         {/* Psychologist */}
-                        <div className="text-center group">
-                            <div className="w-40 h-40 mx-auto bg-gray-200 rounded-full mb-6 overflow-hidden border-4 border-[#F9D423] shadow-lg group-hover:scale-105 transition duration-300">
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.3 }}
+                            className="text-center group bg-gray-50 rounded-3xl p-8 hover:bg-white hover:shadow-2xl transition-all duration-500 border border-transparent hover:border-gray-100"
+                        >
+                            <div className="w-40 h-40 mx-auto bg-gray-200 rounded-full mb-6 overflow-hidden border-4 border-[#F9D423] shadow-lg group-hover:scale-110 group-hover:border-[#D4AF37] transition-all duration-500">
                                 <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=Psychologist&backgroundColor=F9D423`} alt="Psychologist" className="w-full h-full object-cover" />
                             </div>
-                            <h3 className="text-2xl font-bold text-[#2C3E50]">Support Team</h3>
-                            <p className="text-[#D4AF37] font-semibold mb-4">Psychologists</p>
-                            <p className="text-gray-600 px-4">Provide emotional support, behaviour strategies, and ensure learning is trauma-informed.</p>
-                        </div>
+                            <h3 className="text-2xl font-black text-[#2C3E50] mb-1">Support Team</h3>
+                            <p className="text-[#D4AF37] font-bold mb-4 uppercase tracking-wider text-sm">Psychologists</p>
+                            <p className="text-gray-600 font-light">Provide emotional support, behaviour strategies, and ensure learning is trauma-informed.</p>
+                        </motion.div>
                     </div>
                 </div>
             </section>
@@ -289,51 +332,87 @@ const Home = () => {
             </section>
 
             {/* Workshops */}
-            <section id="workshops" className="py-20 bg-white">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-col md:flex-row justify-between items-center mb-16 border-b pb-8">
-                        <div>
-                            <h2 className="text-4xl font-bold text-[#2C3E50] mb-4">Upcoming Workshops</h2>
-                            <div className="w-24 h-1 bg-[#D4AF37] rounded-full"></div>
+            <section id="workshops" className="py-24 bg-white relative">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#F9D423]/5 rounded-full blur-3xl"></div>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-gray-100 pb-8">
+                        <div className="w-full md:w-auto text-center md:text-left">
+                            <motion.h2
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                className="text-4xl md:text-5xl font-black text-[#2C3E50] mb-4"
+                            >
+                                Upcoming Workshops
+                            </motion.h2>
+                            <div className="w-24 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#F9D423] rounded-full mx-auto md:mx-0"></div>
                         </div>
-                        <div className="mt-8 md:mt-0">
-                            <a href="/register" className="bg-[#2C3E50] hover:bg-[#D4AF37] text-white px-8 py-3 rounded-full font-bold transition-colors">
-                                See All Details
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="mt-8 md:mt-0 w-full md:w-auto text-center"
+                        >
+                            <a href="/register" className="inline-block bg-gradient-to-r from-[#2C3E50] to-[#1a252f] hover:shadow-lg hover:shadow-[#2C3E50]/30 hover:-translate-y-1 text-white px-10 py-4 rounded-full font-bold transition-all duration-300">
+                                View Full Schedule
                             </a>
-                        </div>
+                        </motion.div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                         {/* Card 1 */}
-                        <div className="border border-gray-200 rounded-2xl overflow-hidden shadow hover:shadow-xl transition-shadow">
-                            <div className="h-48 bg-gray-200">
-                                <img src="https://picsum.photos/seed/work1/600/400" alt="Workshop" className="w-full h-full object-cover" />
-                            </div>
-                            <div className="p-6">
-                                <span className="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full">Open</span>
-                                <h3 className="text-xl font-bold text-[#2C3E50] mt-4 mb-2">Finger Painting Basics</h3>
-                                <p className="text-gray-600 mb-4 text-sm">A gentle introduction to expressive art.</p>
-                                <div className="flex justify-between items-center text-sm font-semibold">
-                                    <span className="text-[#D4AF37]">Every Saturday</span>
-                                    <a href="/register" className="text-[#2C3E50] underline">Register</a>
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.1 }}
+                            className="bg-white border border-gray-100 rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group"
+                        >
+                            <div className="h-56 bg-gray-200 relative overflow-hidden">
+                                <img src="https://picsum.photos/seed/work1/600/400" alt="Workshop" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-green-700 text-xs font-bold px-4 py-1.5 rounded-full shadow-sm">
+                                    Open for Registration
                                 </div>
                             </div>
-                        </div>
+                            <div className="p-8">
+                                <h3 className="text-2xl font-black text-[#2C3E50] mb-3 group-hover:text-[#D4AF37] transition-colors">Finger Painting Basics</h3>
+                                <p className="text-gray-500 mb-6 font-light leading-relaxed">A gentle introduction to expressive art focusing on tactile sensory experiences.</p>
+                                <div className="flex justify-between items-center pt-6 border-t border-gray-100">
+                                    <span className="text-[#D4AF37] font-bold flex items-center bg-[#D4AF37]/10 px-4 py-2 rounded-lg">Every Saturday</span>
+                                    <a href="/register" className="text-[#2C3E50] font-bold hover:text-[#D4AF37] transition-colors flex items-center">
+                                        Register →
+                                    </a>
+                                </div>
+                            </div>
+                        </motion.div>
+
                         {/* Card 2 */}
-                        <div className="border border-gray-200 rounded-2xl overflow-hidden shadow hover:shadow-xl transition-shadow">
-                            <div className="h-48 bg-gray-200">
-                                <img src="https://picsum.photos/seed/work2/600/400" alt="Workshop" className="w-full h-full object-cover" />
-                            </div>
-                            <div className="p-6">
-                                <span className="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full">Open</span>
-                                <h3 className="text-xl font-bold text-[#2C3E50] mt-4 mb-2">Sensory Crafts</h3>
-                                <p className="text-gray-600 mb-4 text-sm">Working with clay, textures and mild colors.</p>
-                                <div className="flex justify-between items-center text-sm font-semibold">
-                                    <span className="text-[#D4AF37]">Every Sunday</span>
-                                    <a href="/register" className="text-[#2C3E50] underline">Register</a>
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="bg-white border border-gray-100 rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group"
+                        >
+                            <div className="h-56 bg-gray-200 relative overflow-hidden">
+                                <img src="https://picsum.photos/seed/work2/600/400" alt="Workshop" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-green-700 text-xs font-bold px-4 py-1.5 rounded-full shadow-sm">
+                                    Open for Registration
                                 </div>
                             </div>
-                        </div>
+                            <div className="p-8">
+                                <h3 className="text-2xl font-black text-[#2C3E50] mb-3 group-hover:text-[#D4AF37] transition-colors">Sensory Crafts</h3>
+                                <p className="text-gray-500 mb-6 font-light leading-relaxed">Working with clay, textures, and mild colors to stimulate creativity and motor skills.</p>
+                                <div className="flex justify-between items-center pt-6 border-t border-gray-100">
+                                    <span className="text-[#D4AF37] font-bold flex items-center bg-[#D4AF37]/10 px-4 py-2 rounded-lg">Every Sunday</span>
+                                    <a href="/register" className="text-[#2C3E50] font-bold hover:text-[#D4AF37] transition-colors flex items-center">
+                                        Register →
+                                    </a>
+                                </div>
+                            </div>
+                        </motion.div>
                     </div>
                 </div>
             </section>
