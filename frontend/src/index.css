@@ -12,6 +12,51 @@ body {
   font-family: var(--font-sans);
   background-color: #ffffff;
   color: var(--color-secondary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Form elements reset for consistent cross-browser UI */
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Specific resets for checkboxes/radios if appearance-none hides them */
+input[type="checkbox"],
+input[type="radio"] {
+  -webkit-appearance: auto;
+  -moz-appearance: auto;
+  appearance: auto;
+}
+
+/* Remove tap highlight on mobile Webkit */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Custom Webkit scrollbar for Windows/Chrome/Edge consistency */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background-alt);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
 /* Smooth scrolling */
@@ -29,6 +74,7 @@ html {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

@@ -15,7 +15,7 @@ const AdminLayout = () => {
     };
 
     return (
-        <div className="flex h-screen bg-gray-100">
+        <div className="flex h-[100dvh] bg-gray-100">
             {/* Sidebar */}
             <div className="w-64 bg-[#2C3E50] text-white flex flex-col">
                 <div className="p-6 text-center border-b border-gray-700">

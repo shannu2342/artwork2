@@ -5,39 +5,61 @@ const Home = () => {
     return (
         <div className="w-full">
             {/* Hero Section */}
-            <section className="relative h-screen flex items-center justify-center bg-gray-50 overflow-hidden">
+            <section className="relative h-[100dvh] flex items-center justify-center bg-gray-900 overflow-hidden">
                 <div className="absolute inset-0 z-0">
-                    {/* We will add an image back ground here */}
-                    <div className="absolute inset-0 bg-[#2C3E50]/70 mix-blend-multiply" />
-                    <img src="/hero.png" alt="Children creating art" className="w-full h-full object-cover filter brightness-75" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#1a252f]/90 via-[#2C3E50]/70 to-[#D4AF37]/30 mix-blend-multiply z-10" />
+                    <motion.img
+                        initial={{ scale: 1.1 }}
+                        animate={{ scale: 1 }}
+                        transition={{ duration: 1.5, ease: "easeOut" }}
+                        src="/hero.png"
+                        alt="Children creating art"
+                        className="w-full h-full object-cover filter brightness-75"
+                    />
                 </div>
-                <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-                    <motion.h1
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="text-5xl md:text-7xl font-extrabold text-[#D4AF37] mb-6 drop-shadow-md"
+                <div className="relative z-20 text-center px-4 max-w-5xl mx-auto">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 1 }}
+                        className="mb-8"
                     >
-                        Limitless Art
-                    </motion.h1>
+                        <h1 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#F9D423] to-[#D4AF37] drop-shadow-lg tracking-tight mb-4">
+                            Limitless Art
+                        </h1>
+                        <div className="h-1.5 w-32 bg-gradient-to-r from-[#F9D423] to-transparent mx-auto rounded-full"></div>
+                    </motion.div>
                     <motion.p
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        className="text-xl md:text-3xl text-white mb-8 font-medium drop-shadow-md"
+                        transition={{ duration: 0.8, delay: 0.3 }}
+                        className="text-xl md:text-4xl text-gray-100 mb-10 font-medium drop-shadow-xl"
                     >
-                        Empowering specially-abled children through art and skill development.
+                        Empowering specially-abled children <br className="hidden md:block" /> through art and skill development.
                     </motion.p>
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.4 }}
+                        transition={{ duration: 0.8, delay: 0.5 }}
                     >
-                        <a href="/register" className="inline-block bg-[#F9D423] hover:bg-[#D4AF37] text-black font-bold text-lg py-4 px-10 rounded-full shadow-xl transform transition hover:scale-105">
-                            Join Our Workshop
+                        <a href="/register" className="group relative inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-[#1a252f] transition-all duration-300 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] rounded-full shadow-2xl hover:scale-105 hover:shadow-[#D4AF37]/50 focus:outline-none overflow-hidden">
+                            <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></span>
+                            <span className="relative">Join Our Workshop</span>
                         </a>
                     </motion.div>
                 </div>
+
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.5, duration: 1 }}
+                    className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 animate-bounce cursor-pointer"
+                    onClick={() => document.getElementById('who-we-are').scrollIntoView({ behavior: 'smooth' })}
+                >
+                    <div className="w-8 h-14 border-2 border-white/50 rounded-full flex justify-center p-2">
+                        <div className="w-1.5 h-3 bg-white rounded-full mt-1"></div>
+                    </div>
+                </motion.div>
             </section>
 
             {/* Who We Are */}
@@ -182,23 +204,38 @@ const Home = () => {
             </section>
 
             {/* Gallery Section */}
-            <section id="gallery" className="py-20 bg-gray-50">
+            <section id="gallery" className="py-24 bg-gradient-to-b from-gray-50 to-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-bold text-[#2C3E50] mb-4">Our Gallery</h2>
-                        <div className="w-24 h-1 bg-[#D4AF37] mx-auto rounded-full mb-8"></div>
-                        <p className="text-xl text-gray-600">A showcase of beautiful artwork created by our talented students.</p>
+                    <div className="text-center mb-20 relative">
+                        <motion.h2
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-5xl font-black text-[#2C3E50] mb-6"
+                        >
+                            Our Gallery
+                        </motion.h2>
+                        <div className="w-32 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#F9D423] mx-auto rounded-full mb-8"></div>
+                        <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light">A showcase of beautiful artwork created by our talented students.</p>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        {/* Placeholder images */}
-                        {[1, 2, 3, 4, 5, 6].map((item) => (
-                            <div key={item} className="h-64 rounded-xl overflow-hidden shadow-md group relative">
-                                <img src={`https://picsum.photos/seed/${item + 50}/600/400`} alt="Gallery Art" className="w-full h-full object-cover transform group-hover:scale-110 transition duration-500" />
-                                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-                                    <span className="text-white font-bold text-lg border-2 border-white px-4 py-2 rounded-lg">View Artwork</span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {/* Placeholder images with premium hover effects */}
+                        {[1, 2, 3, 4, 5, 6].map((item, i) => (
+                            <motion.div
+                                key={item}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.1 }}
+                                className="h-72 rounded-2xl overflow-hidden shadow-xl group relative cursor-pointer"
+                            >
+                                <img src={`https://picsum.photos/seed/${item + 50}/600/400`} alt="Gallery Art" className="w-full h-full object-cover transform scale-105 group-hover:scale-125 transition duration-700 ease-in-out" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#2C3E50]/90 via-[#2C3E50]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-end pb-8">
+                                    <span className="text-white font-bold text-xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">Student Art #{item}</span>
+                                    <span className="text-[#F9D423] font-semibold text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">View Masterpiece</span>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                 </div>

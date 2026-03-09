@@ -16,15 +16,15 @@ const MainLayout = () => {
     ];
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-[100dvh]">
             {/* Navigation */}
             <nav className="fixed w-full z-50 bg-white shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-20">
                         <div className="flex items-center">
                             <Link to="/" className="flex-shrink-0 flex items-center">
-                                <img className="h-12 w-auto" src="/logo.png" alt="Limitless Art Logo" />
-                                <span className="ml-3 text-xl font-bold text-[#D4AF37] uppercase tracking-wide">Limitless Art</span>
+                                <img className="h-16 w-auto" src="/logo.png" alt="Limitless Art Logo" />
+                                <span className="ml-3 text-2xl font-black text-[#D4AF37] uppercase tracking-wide">Limitless Art</span>
                             </Link>
                         </div>
 
