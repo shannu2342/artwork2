@@ -23,7 +23,7 @@ const MainLayout = () => {
                     <div className="flex justify-between h-20">
                         <div className="flex items-center">
                             <Link to="/" className="flex-shrink-0 flex items-center">
-                                <img className="h-16 w-auto" src="/logo.png" alt="Limitless Art Logo" />
+                                <img className="h-16 w-auto" src="/logo.jpg" alt="Limitless Art Logo" />
                                 <span className="ml-3 text-2xl font-black text-[#D4AF37] uppercase tracking-wide">Limitless Art</span>
                             </Link>
                         </div>
@@ -98,7 +98,7 @@ const MainLayout = () => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div>
                             <div className="flex items-center justify-center md:justify-start mb-4">
-                                <img className="h-10 w-auto bg-white p-1 rounded-full" src="/logo.png" alt="Limitless Art Logo" />
+                                <img className="h-10 w-auto bg-white p-1 rounded-full" src="/logo.jpg" alt="Limitless Art Logo" />
                                 <span className="ml-3 text-xl font-bold text-[#D4AF37]">Limitless Art</span>
                             </div>
                             <p className="text-gray-300">Empowering specially-abled children through art and skill development.</p>
