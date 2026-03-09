@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Palette, Users, Heart, Star, BookOpen, Shield } from 'lucide-react';
+import { Palette, Users, Heart, Star, BookOpen, Shield, Quote } from 'lucide-react';
 
 const Home = () => {
     return (
@@ -287,6 +287,104 @@ const Home = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Testimonials */}
+            <section id="testimonials" className="py-24 bg-gray-50">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center mb-20 relative">
+                        <motion.h2
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-5xl font-black text-[#2C3E50] mb-6"
+                        >
+                            What Parents Say
+                        </motion.h2>
+                        <div className="w-32 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#F9D423] mx-auto rounded-full mb-8"></div>
+                        <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light">Heartwarming stories from our diverse community.</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {/* Testimonial 1 */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.1 }}
+                            className="bg-white p-10 rounded-3xl shadow-lg border border-gray-100 relative group hover:-translate-y-2 transition-transform duration-300"
+                        >
+                            <Quote className="absolute top-6 right-8 w-12 h-12 text-[#D4AF37]/20 group-hover:text-[#D4AF37]/40 transition-colors duration-300" />
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className="w-14 h-14 bg-gradient-to-br from-[#D4AF37] to-[#F9D423] rounded-full flex items-center justify-center text-white font-bold text-xl shadow-md">
+                                    SJ
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-[#2C3E50] text-lg">Sarah Jenkins</h4>
+                                    <p className="text-sm text-gray-500">Parent of 8-year-old</p>
+                                </div>
+                            </div>
+                            <p className="text-gray-600 leading-relaxed italic z-10 relative">
+                                "The workshops at Limitless Art have been a game changer for my son. He has found a beautiful way to express himself through colors. The teachers are so incredibly patient and kind."
+                            </p>
+                            <div className="flex gap-1 mt-6">
+                                {[1, 2, 3, 4, 5].map(star => <Star key={star} className="w-5 h-5 fill-[#F9D423] text-[#F9D423]" />)}
+                            </div>
+                        </motion.div>
+
+                        {/* Testimonial 2 */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="bg-white p-10 rounded-3xl shadow-lg border border-gray-100 relative group hover:-translate-y-2 transition-transform duration-300"
+                        >
+                            <Quote className="absolute top-6 right-8 w-12 h-12 text-[#D4AF37]/20 group-hover:text-[#D4AF37]/40 transition-colors duration-300" />
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className="w-14 h-14 bg-[#2C3E50] rounded-full flex items-center justify-center text-white font-bold text-xl shadow-md">
+                                    MR
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-[#2C3E50] text-lg">Michael Rodriguez</h4>
+                                    <p className="text-sm text-gray-500">Parent of 12-year-old</p>
+                                </div>
+                            </div>
+                            <p className="text-gray-600 leading-relaxed italic z-10 relative">
+                                "Finding an inclusive space where my daughter feels truly accepted was hard. Since joining Limitless Art, her confidence has skyrocketed, and her sensory crafts are beautifully displayed in our home."
+                            </p>
+                            <div className="flex gap-1 mt-6">
+                                {[1, 2, 3, 4, 5].map(star => <Star key={star} className="w-5 h-5 fill-[#F9D423] text-[#F9D423]" />)}
+                            </div>
+                        </motion.div>
+
+                        {/* Testimonial 3 */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.3 }}
+                            className="bg-white p-10 rounded-3xl shadow-lg border border-gray-100 relative group hover:-translate-y-2 transition-transform duration-300"
+                        >
+                            <Quote className="absolute top-6 right-8 w-12 h-12 text-[#D4AF37]/20 group-hover:text-[#D4AF37]/40 transition-colors duration-300" />
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className="w-14 h-14 bg-gradient-to-br from-[#2C3E50] to-gray-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-md">
+                                    AP
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-[#2C3E50] text-lg">Anita Patel</h4>
+                                    <p className="text-sm text-gray-500">Parent of 10-year-old</p>
+                                </div>
+                            </div>
+                            <p className="text-gray-600 leading-relaxed italic z-10 relative">
+                                "The psychological support integrated into the art program is brilliant. It isn't just an art class; it's a therapeutic environment where our kids can thrive without pressure or judgment."
+                            </p>
+                            <div className="flex gap-1 mt-6">
+                                {[1, 2, 3, 4, 5].map(star => <Star key={star} className="w-5 h-5 fill-[#F9D423] text-[#F9D423]" />)}
+                            </div>
+                        </motion.div>
                     </div>
                 </div>
             </section>
