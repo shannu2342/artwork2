@@ -191,52 +191,6 @@ const Home = () => {
                 </div>
             </section>
 
-            <section id="mission" className="py-24 bg-[#1a252f] text-white relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-64 h-64 bg-[#D4AF37] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-                <div
-                    className="absolute bottom-0 right-0 w-64 h-64 bg-[#F9D423] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"
-                    style={{ animationDelay: '1s' }}
-                ></div>
-
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-                        <motion.div
-                            initial={{ opacity: 0, x: -50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8 }}
-                            className="bg-white/5 p-12 rounded-3xl backdrop-blur-md border border-white/10 relative group overflow-hidden"
-                        >
-                            <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-[#F9D423] to-[#D4AF37]"></div>
-                            <h2 className="text-3xl font-black text-[#D4AF37] mb-6 flex items-center">
-                                <Heart className="mr-5 w-10 h-10 group-hover:scale-125 transition-transform duration-500" />
-                                {home.missionVision.missionTitle}
-                            </h2>
-                            <p className="text-xl leading-relaxed font-light text-gray-200">
-                                {home.missionVision.missionText}
-                            </p>
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, x: 50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8 }}
-                            className="bg-white/5 p-12 rounded-3xl backdrop-blur-md border border-white/10 relative group overflow-hidden"
-                        >
-                            <div className="absolute top-0 right-0 w-2 h-full bg-gradient-to-b from-[#D4AF37] to-[#F9D423]"></div>
-                            <h2 className="text-3xl font-black text-[#D4AF37] mb-6 flex items-center">
-                                <Star className="mr-5 w-10 h-10 group-hover:scale-125 transition-transform duration-500" />
-                                {home.missionVision.visionTitle}
-                            </h2>
-                            <p className="text-xl leading-relaxed font-light text-gray-200">
-                                {home.missionVision.visionText}
-                            </p>
-                        </motion.div>
-                    </div>
-                </div>
-            </section>
-
             <section id="what-we-do" className="py-24 bg-gray-50 relative">
                 <div className="absolute top-40 left-0 w-32 h-32 bg-[#D4AF37]/10 rounded-full blur-2xl"></div>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -251,6 +205,42 @@ const Home = () => {
                         </motion.h2>
                         <div className="w-32 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#F9D423] mx-auto rounded-full mb-8"></div>
                         <p className="text-xl text-gray-600 max-w-3xl mx-auto font-light">{home.whatWeDo.description}</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-14">
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="bg-white p-8 rounded-3xl border border-gray-100 shadow-lg relative overflow-hidden"
+                        >
+                            <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-[#F9D423] to-[#D4AF37]"></div>
+                            <h3 className="text-2xl font-black text-[#2C3E50] mb-4 flex items-center">
+                                <Heart className="mr-4 w-8 h-8 text-[#D4AF37]" />
+                                {home.missionVision.missionTitle}
+                            </h3>
+                            <p className="text-gray-600 leading-relaxed font-light">
+                                {home.missionVision.missionText}
+                            </p>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, x: 30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="bg-white p-8 rounded-3xl border border-gray-100 shadow-lg relative overflow-hidden"
+                        >
+                            <div className="absolute top-0 right-0 w-2 h-full bg-gradient-to-b from-[#D4AF37] to-[#F9D423]"></div>
+                            <h3 className="text-2xl font-black text-[#2C3E50] mb-4 flex items-center">
+                                <Star className="mr-4 w-8 h-8 text-[#D4AF37]" />
+                                {home.missionVision.visionTitle}
+                            </h3>
+                            <p className="text-gray-600 leading-relaxed font-light">
+                                {home.missionVision.visionText}
+                            </p>
+                        </motion.div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-10">

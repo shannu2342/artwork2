@@ -393,7 +393,7 @@ const AdminHomeContent = () => {
                 </div>
             </SectionCard>
 
-            <SectionCard title="Mission & Vision" description="Dark section content.">
+            <SectionCard title="Mission & Vision (Inside What We Do)" description="These cards appear inside the What We Do section.">
                 <EditableTextField
                     label="Mission Title"
                     value={home.missionVision.missionTitle}

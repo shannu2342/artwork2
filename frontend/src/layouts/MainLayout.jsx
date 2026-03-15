@@ -10,7 +10,6 @@ const MainLayout = () => {
     const navLinks = [
         { name: 'Home', href: '/' },
         { name: 'Who We Are', href: '/#who-we-are' },
-        { name: 'Mission & Vision', href: '/#mission' },
         { name: 'What We Do', href: '/#what-we-do' },
         { name: 'Team', href: '/#team' },
         { name: 'Gallery', href: '/#gallery' },
