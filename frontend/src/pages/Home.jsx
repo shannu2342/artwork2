@@ -234,6 +234,11 @@ const Home = () => {
                         })}
                     </div>
 
+                    <div className="text-center mb-8">
+                        <h3 className="text-3xl md:text-4xl font-black text-[#2C3E50]">Mission & Vision</h3>
+                        <div className="w-24 h-1 bg-gradient-to-r from-[#D4AF37] to-[#F9D423] mx-auto rounded-full mt-3"></div>
+                    </div>
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <motion.div
                             initial={{ opacity: 0, x: -30 }}
