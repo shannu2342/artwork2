@@ -1,82 +1,166 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Plus, Trash2, Edit } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { CalendarDays, ExternalLink, Home, Image as ImageIcon, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useSiteContent } from '../hooks/useSiteContent';
+import { fetchRegistrations } from '../services/siteContentService';
 
 const AdminDashboard = () => {
-    const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const { content } = useSiteContent();
+    const [registrations, setRegistrations] = useState([]);
+    const [loadingRegistrations, setLoadingRegistrations] = useState(true);
+    const [registrationError, setRegistrationError] = useState('');
 
     useEffect(() => {
-        // In a real app we'd fetch from backend here.
-        // For now we mock the data to show UI structure.
-        setPosts([
-            { _id: '1', title: 'New Workshop Scheduled', type: 'Workshop', date: '2026-04-10' },
-            { _id: '2', title: 'Awesome Art by Jimmy', type: 'Gallery', date: '2026-03-25' }
-        ]);
-        setLoading(false);
+        const loadRegistrations = async () => {
+            setLoadingRegistrations(true);
+            try {
+                const rows = await fetchRegistrations();
+                setRegistrations(rows);
+                setRegistrationError('');
+            } catch (_error) {
+                setRegistrationError('Could not load registrations from API.');
+            } finally {
+                setLoadingRegistrations(false);
+            }
+        };
+
+        void loadRegistrations();
     }, []);
 
-    const handleDelete = (id) => {
-        if (window.confirm('Are you sure you want to delete this post?')) {
-            setPosts(posts.filter(p => p._id !== id));
-        }
-    };
+    const stats = useMemo(
+        () => [
+            {
+                title: 'Total Registrations',
+                value: registrations.length,
+                icon: Users,
+                accent: 'border-l-[#2C3E50]'
+            },
+            {
+                title: 'Team Cards on Home',
+                value: content.home.team.members.length,
+                icon: Home,
+                accent: 'border-l-[#D4AF37]'
+            },
+            {
+                title: 'Gallery Items on Home',
+                value: content.home.gallery.items.length,
+                icon: ImageIcon,
+                accent: 'border-l-[#F9D423]'
+            }
+        ],
+        [content.home.gallery.items.length, content.home.team.members.length, registrations.length]
+    );
 
     return (
-        <div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 border-l-4 border-l-[#2C3E50]">
-                    <h3 className="text-gray-500 text-sm font-medium">Total Registrations</h3>
-                    <p className="text-3xl font-bold text-gray-800 mt-2">142</p>
+        <div className="space-y-8">
+            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                <h1 className="text-2xl font-black text-[#2C3E50]">Admin Overview</h1>
+                <p className="text-sm text-gray-500 mt-1">
+                    This dashboard is connected to Node.js + Express + MongoDB. Use Home Content to edit website text and photos.
+                </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {stats.map((stat) => (
+                    <div
+                        key={stat.title}
+                        className={`bg-white p-6 rounded-xl shadow-sm border border-gray-100 border-l-4 ${stat.accent}`}
+                    >
+                        <div className="flex items-center justify-between">
+                            <h3 className="text-gray-500 text-sm font-medium">{stat.title}</h3>
+                            <stat.icon className="w-4 h-4 text-gray-400" />
+                        </div>
+                        <p className="text-3xl font-bold text-gray-800 mt-2">{stat.value}</p>
+                    </div>
+                ))}
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+                    <h2 className="text-lg font-bold text-[#2C3E50] mb-4">Quick Actions</h2>
+                    <div className="space-y-3">
+                        <Link
+                            to="/admin/home-content"
+                            className="w-full inline-flex items-center justify-between rounded-lg border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+                        >
+                            Open Home Content Manager
+                            <ExternalLink className="w-4 h-4" />
+                        </Link>
+                        <Link
+                            to="/"
+                            target="_blank"
+                            className="w-full inline-flex items-center justify-between rounded-lg border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+                        >
+                            Open Public Home Page
+                            <ExternalLink className="w-4 h-4" />
+                        </Link>
+                    </div>
                 </div>
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 border-l-4 border-l-[#D4AF37]">
-                    <h3 className="text-gray-500 text-sm font-medium">Active Workshops</h3>
-                    <p className="text-3xl font-bold text-gray-800 mt-2">8</p>
-                </div>
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 border-l-4 border-l-[#F9D423]">
-                    <h3 className="text-gray-500 text-sm font-medium">Gallery Items</h3>
-                    <p className="text-3xl font-bold text-gray-800 mt-2">56</p>
+
+                <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+                    <h2 className="text-lg font-bold text-[#2C3E50] mb-4">Content Snapshot</h2>
+                    <ul className="space-y-3 text-sm text-gray-600">
+                        <li className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-2">
+                            <span>Hero Title</span>
+                            <span className="font-semibold text-[#2C3E50] truncate ml-4">{content.home.hero.title}</span>
+                        </li>
+                        <li className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-2">
+                            <span>Programs</span>
+                            <span className="font-semibold text-[#2C3E50]">{content.home.programs.length}</span>
+                        </li>
+                        <li className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-2">
+                            <span>Testimonials</span>
+                            <span className="font-semibold text-[#2C3E50]">{content.home.testimonials.items.length}</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-                    <h2 className="text-lg font-bold text-[#2C3E50]">Manage Posts & Content</h2>
-                    <button className="bg-[#D4AF37] hover:bg-[#b0922e] text-white px-4 py-2 rounded-lg flex items-center text-sm font-medium transition">
-                        <Plus className="w-4 h-4 mr-2" /> Add New
-                    </button>
+                <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50">
+                    <h2 className="text-lg font-bold text-[#2C3E50]">Recent Registrations</h2>
+                    <CalendarDays className="w-4 h-4 text-gray-500" />
                 </div>
 
-                <div className="p-6">
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left border-collapse">
+                <div className="p-6 overflow-x-auto">
+                    {loadingRegistrations ? (
+                        <p className="text-sm text-gray-500">Loading registrations...</p>
+                    ) : null}
+
+                    {registrationError ? (
+                        <p className="text-sm text-red-600">{registrationError}</p>
+                    ) : null}
+
+                    {!loadingRegistrations && !registrationError ? (
+                        <table className="w-full text-left border-collapse min-w-[640px]">
                             <thead>
                                 <tr className="border-b border-gray-200">
-                                    <th className="pb-3 text-sm font-semibold text-gray-600 uppercase">Title</th>
-                                    <th className="pb-3 text-sm font-semibold text-gray-600 uppercase">Type</th>
-                                    <th className="pb-3 text-sm font-semibold text-gray-600 uppercase">Date</th>
-                                    <th className="pb-3 text-sm font-semibold text-gray-600 uppercase text-right">Actions</th>
+                                    <th className="pb-3 text-xs font-semibold text-gray-600 uppercase">Child</th>
+                                    <th className="pb-3 text-xs font-semibold text-gray-600 uppercase">Parent</th>
+                                    <th className="pb-3 text-xs font-semibold text-gray-600 uppercase">Phone</th>
+                                    <th className="pb-3 text-xs font-semibold text-gray-600 uppercase">Created</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {posts.map((post) => (
-                                    <tr key={post._id} className="border-b border-gray-100 hover:bg-gray-50">
-                                        <td className="py-4 text-gray-800 font-medium">{post.title}</td>
-                                        <td className="py-4">
-                                            <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full font-medium">
-                                                {post.type}
-                                            </span>
+                                {registrations.slice(0, 8).map((row) => (
+                                    <tr key={row._id} className="border-b border-gray-100 hover:bg-gray-50">
+                                        <td className="py-3 text-sm text-gray-800 font-medium">
+                                            {row.data?.childName || 'Unknown'}
                                         </td>
-                                        <td className="py-4 text-gray-500 text-sm">{post.date}</td>
-                                        <td className="py-4 text-right">
-                                            <button className="text-gray-400 hover:text-blue-500 mr-3"><Edit className="w-5 h-5" /></button>
-                                            <button onClick={() => handleDelete(post._id)} className="text-gray-400 hover:text-red-500"><Trash2 className="w-5 h-5" /></button>
+                                        <td className="py-3 text-sm text-gray-600">{row.data?.parentName || '-'}</td>
+                                        <td className="py-3 text-sm text-gray-600">{row.data?.phone || '-'}</td>
+                                        <td className="py-3 text-sm text-gray-500">
+                                            {new Date(row.createdAt).toLocaleDateString()}
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
-                    </div>
+                    ) : null}
+
+                    {!loadingRegistrations && !registrationError && registrations.length === 0 ? (
+                        <p className="text-sm text-gray-500">No registrations yet.</p>
+                    ) : null}
                 </div>
             </div>
         </div>

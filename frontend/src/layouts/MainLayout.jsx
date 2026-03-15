@@ -7,6 +7,7 @@ const MainLayout = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const navLinks = [
+        { name: 'Home', href: '/' },
         { name: 'Who We Are', href: '/#who-we-are' },
         { name: 'Mission & Vision', href: '/#mission' },
         { name: 'What We Do', href: '/#what-we-do' },
@@ -113,6 +114,7 @@ const MainLayout = () => {
                         <div>
                             <h3 className="text-lg font-bold mb-4 border-b border-[#D4AF37] pb-2 inline-block">Quick Links</h3>
                             <ul className="space-y-2 text-gray-300">
+                                <li><a href="/" className="hover:text-white transition-colors">Home</a></li>
                                 <li><a href="/#who-we-are" className="hover:text-white transition-colors">Who We Are</a></li>
                                 <li><a href="/#workshops" className="hover:text-white transition-colors">Workshops</a></li>
                                 <li><Link to="/register" className="hover:text-white transition-colors">Registration</Link></li>

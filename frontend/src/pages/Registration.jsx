@@ -22,8 +22,8 @@ const Registration = () => {
         e.preventDefault();
         setStatus('loading');
         try {
-            // Using a relative URL assuming proxy or standard fetch, or full URL to typical local backend
-            const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/content';
+            const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+            const backendUrl = `${apiBaseUrl}/content`;
             const res = await fetch(backendUrl, {
                 method: 'POST',
                 headers: {

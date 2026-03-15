@@ -1,22 +1,51 @@
 import { motion } from 'framer-motion';
 import { Palette, Users, Heart, Star, BookOpen, Shield, Quote } from 'lucide-react';
+import { useSiteContent } from '../hooks/useSiteContent';
+
+const iconMap = {
+    Palette,
+    Users,
+    Heart,
+    Star,
+    BookOpen,
+    Shield
+};
+
+const badgeStyles = [
+    'bg-gradient-to-br from-[#D4AF37] to-[#F9D423]',
+    'bg-[#2C3E50]',
+    'bg-gradient-to-br from-[#2C3E50] to-gray-500'
+];
+
+const teamBorders = ['border-[#D4AF37]', 'border-[#2C3E50]', 'border-[#F9D423]'];
+
+const resolveIcon = (iconName, fallback) => iconMap[iconName] || fallback;
 
 const Home = () => {
+    const { content } = useSiteContent();
+    const home = content.home;
+
+    const heroImage = home.hero.backgroundImage || '';
+
     return (
         <div className="w-full">
-            {/* Hero Section */}
             <section className="relative h-[100dvh] flex items-center justify-center bg-gray-900 overflow-hidden">
                 <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-gradient-to-br from-[#1a252f]/90 via-[#2C3E50]/70 to-[#D4AF37]/30 mix-blend-multiply z-10" />
-                    <motion.img
-                        initial={{ scale: 1.1 }}
-                        animate={{ scale: 1 }}
-                        transition={{ duration: 1.5, ease: "easeOut" }}
-                        src="/hero.png"
-                        alt="Children creating art"
-                        className="w-full h-full object-cover filter brightness-75"
-                    />
+                    {heroImage ? (
+                        <motion.img
+                            initial={{ scale: 1.1 }}
+                            animate={{ scale: 1 }}
+                            transition={{ duration: 1.5, ease: 'easeOut' }}
+                            src={heroImage}
+                            alt="Children creating art"
+                            className="w-full h-full object-cover filter brightness-75"
+                        />
+                    ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-[#1a252f] via-[#2C3E50] to-[#D4AF37]/80" />
+                    )}
                 </div>
+
                 <div className="relative z-20 text-center px-4 max-w-5xl mx-auto">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -25,26 +54,31 @@ const Home = () => {
                         className="mb-8"
                     >
                         <h1 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#F9D423] to-[#D4AF37] drop-shadow-lg tracking-tight mb-4">
-                            Limitless Art
+                            {home.hero.title}
                         </h1>
                         <div className="h-1.5 w-32 bg-gradient-to-r from-[#F9D423] to-transparent mx-auto rounded-full"></div>
                     </motion.div>
+
                     <motion.p
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.3 }}
                         className="text-xl md:text-4xl text-gray-100 mb-10 font-medium drop-shadow-xl"
                     >
-                        Empowering specially-abled children <br className="hidden md:block" /> through art and skill development.
+                        {home.hero.subtitle}
                     </motion.p>
+
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.5 }}
                     >
-                        <a href="/register" className="group relative inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-[#1a252f] transition-all duration-300 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] rounded-full shadow-2xl hover:scale-105 hover:shadow-[#D4AF37]/50 focus:outline-none overflow-hidden">
+                        <a
+                            href={home.hero.ctaLink || '/register'}
+                            className="group relative inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-[#1a252f] transition-all duration-300 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] rounded-full shadow-2xl hover:scale-105 hover:shadow-[#D4AF37]/50 focus:outline-none overflow-hidden"
+                        >
                             <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></span>
-                            <span className="relative">Join Our Workshop</span>
+                            <span className="relative">{home.hero.ctaText}</span>
                         </a>
                     </motion.div>
                 </div>
@@ -54,7 +88,7 @@ const Home = () => {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1.5, duration: 1 }}
                     className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 animate-bounce cursor-pointer"
-                    onClick={() => document.getElementById('who-we-are').scrollIntoView({ behavior: 'smooth' })}
+                    onClick={() => document.getElementById('who-we-are')?.scrollIntoView({ behavior: 'smooth' })}
                 >
                     <div className="w-8 h-14 border-2 border-white/50 rounded-full flex justify-center p-2">
                         <div className="w-1.5 h-3 bg-white rounded-full mt-1"></div>
@@ -62,7 +96,6 @@ const Home = () => {
                 </motion.div>
             </section>
 
-            {/* Who We Are */}
             <section id="who-we-are" className="py-24 bg-white relative overflow-hidden">
                 <div className="absolute -top-40 -right-40 w-96 h-96 bg-[#D4AF37]/5 rounded-full blur-3xl"></div>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -73,7 +106,7 @@ const Home = () => {
                             viewport={{ once: true }}
                             className="text-4xl md:text-5xl font-black text-[#2C3E50] mb-4"
                         >
-                            Who We Are
+                            {home.whoWeAre.title}
                         </motion.h2>
                         <div className="w-24 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#F9D423] mx-auto rounded-full"></div>
                     </div>
@@ -86,40 +119,40 @@ const Home = () => {
                             className="w-full lg:w-1/2"
                         >
                             <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-light">
-                                Limitless Art is an inclusive organisation dedicated to nurturing the abilities of specially-abled children through art and practical skill learning. We identify each child's interests and tailor experiences that build creative competence, emotional resilience, and practical abilities. Our supportive environment encourages self-expression, independence and pathways to meaningful opportunities.
+                                {home.whoWeAre.description}
                             </p>
                         </motion.div>
+
                         <div className="w-full lg:w-1/2 grid grid-cols-2 gap-6">
-                            {[
-                                { icon: Palette, title: 'Creative Outlets', delay: 0.1 },
-                                { icon: Shield, title: 'Safe Space', delay: 0.2 },
-                                { icon: Star, title: 'Skill Building', delay: 0.3 },
-                                { icon: Heart, title: 'Emotional Support', delay: 0.4 }
-                            ].map((item, idx) => (
-                                <motion.div
-                                    key={idx}
-                                    initial={{ opacity: 0, y: 30 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: item.delay, duration: 0.5 }}
-                                    className="bg-white p-6 rounded-2xl shadow-md border border-gray-100 flex flex-col items-center text-center hover:-translate-y-2 transition-transform duration-300 group"
-                                >
-                                    <div className="bg-[#f8fafc] w-16 h-16 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                                        <item.icon className="w-8 h-8 text-[#D4AF37]" />
-                                    </div>
-                                    <h4 className="font-bold text-[#2C3E50]">{item.title}</h4>
-                                </motion.div>
-                            ))}
+                            {home.highlights.map((item, idx) => {
+                                const IconComponent = resolveIcon(item.icon, Palette);
+                                return (
+                                    <motion.div
+                                        key={`${item.title}-${idx}`}
+                                        initial={{ opacity: 0, y: 30 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: idx * 0.1, duration: 0.5 }}
+                                        className="bg-white p-6 rounded-2xl shadow-md border border-gray-100 flex flex-col items-center text-center hover:-translate-y-2 transition-transform duration-300 group"
+                                    >
+                                        <div className="bg-[#f8fafc] w-16 h-16 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                                            <IconComponent className="w-8 h-8 text-[#D4AF37]" />
+                                        </div>
+                                        <h4 className="font-bold text-[#2C3E50]">{item.title}</h4>
+                                    </motion.div>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Mission & Vision */}
             <section id="mission" className="py-24 bg-[#1a252f] text-white relative overflow-hidden">
-                {/* Background decorative elements */}
                 <div className="absolute top-0 left-0 w-64 h-64 bg-[#D4AF37] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-                <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#F9D423] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '1s' }}></div>
+                <div
+                    className="absolute bottom-0 right-0 w-64 h-64 bg-[#F9D423] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"
+                    style={{ animationDelay: '1s' }}
+                ></div>
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
@@ -132,12 +165,14 @@ const Home = () => {
                         >
                             <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-[#F9D423] to-[#D4AF37]"></div>
                             <h2 className="text-3xl font-black text-[#D4AF37] mb-6 flex items-center">
-                                <Heart className="mr-5 w-10 h-10 group-hover:scale-125 transition-transform duration-500" /> Our Mission
+                                <Heart className="mr-5 w-10 h-10 group-hover:scale-125 transition-transform duration-500" />
+                                {home.missionVision.missionTitle}
                             </h2>
                             <p className="text-xl leading-relaxed font-light text-gray-200">
-                                To empower specially-abled children by developing artistic skills, confidence and independence through structured, compassionate art education.
+                                {home.missionVision.missionText}
                             </p>
                         </motion.div>
+
                         <motion.div
                             initial={{ opacity: 0, x: 50 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -147,17 +182,17 @@ const Home = () => {
                         >
                             <div className="absolute top-0 right-0 w-2 h-full bg-gradient-to-b from-[#D4AF37] to-[#F9D423]"></div>
                             <h2 className="text-3xl font-black text-[#D4AF37] mb-6 flex items-center">
-                                <Star className="mr-5 w-10 h-10 group-hover:scale-125 transition-transform duration-500" /> Our Vision
+                                <Star className="mr-5 w-10 h-10 group-hover:scale-125 transition-transform duration-500" />
+                                {home.missionVision.visionTitle}
                             </h2>
                             <p className="text-xl leading-relaxed font-light text-gray-200">
-                                To build a global inclusive platform where specially-abled artists can learn, grow, showcase their talent, and earn from their creativity.
+                                {home.missionVision.visionText}
                             </p>
                         </motion.div>
                     </div>
                 </div>
             </section>
 
-            {/* What We Do */}
             <section id="what-we-do" className="py-24 bg-gray-50 relative">
                 <div className="absolute top-40 left-0 w-32 h-32 bg-[#D4AF37]/10 rounded-full blur-2xl"></div>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -168,65 +203,41 @@ const Home = () => {
                             viewport={{ once: true }}
                             className="text-5xl font-black text-[#2C3E50] mb-6"
                         >
-                            What We Do
+                            {home.whatWeDo.title}
                         </motion.h2>
                         <div className="w-32 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#F9D423] mx-auto rounded-full mb-8"></div>
-                        <p className="text-xl text-gray-600 max-w-3xl mx-auto font-light">We use interest-based learning that adapts to each child’s comfort and strengths, blending technical skill training with emotional support.</p>
+                        <p className="text-xl text-gray-600 max-w-3xl mx-auto font-light">{home.whatWeDo.description}</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                        {/* Program 1 */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.1 }}
-                            className="bg-white rounded-3xl shadow-xl p-10 hover:-translate-y-3 transition-transform duration-500 border border-gray-100 group relative overflow-hidden"
-                        >
-                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-                            <div className="bg-gradient-to-br from-[#F9D423]/20 to-[#D4AF37]/10 w-20 h-20 rounded-2xl flex items-center justify-center mb-8 group-hover:rotate-12 transition-transform duration-500">
-                                <Palette className="w-10 h-10 text-[#D4AF37]" />
-                            </div>
-                            <h3 className="text-2xl font-black text-[#2C3E50] mb-4">Art Workshops</h3>
-                            <p className="text-gray-600 leading-relaxed font-light">Short, hands-on sessions focusing on creativity, engagement and confidence building through practical artistic tasks.</p>
-                        </motion.div>
+                        {home.programs.map((program, index) => {
+                            const IconComponent = resolveIcon(program.icon, Palette);
+                            const iconRotation = index % 2 === 0 ? 'group-hover:rotate-12' : 'group-hover:-rotate-12';
 
-                        {/* Program 2 */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.2 }}
-                            className="bg-white rounded-3xl shadow-xl p-10 hover:-translate-y-3 transition-transform duration-500 border border-gray-100 group relative overflow-hidden"
-                        >
-                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-                            <div className="bg-gradient-to-br from-[#F9D423]/20 to-[#D4AF37]/10 w-20 h-20 rounded-2xl flex items-center justify-center mb-8 group-hover:-rotate-12 transition-transform duration-500">
-                                <BookOpen className="w-10 h-10 text-[#D4AF37]" />
-                            </div>
-                            <h3 className="text-2xl font-black text-[#2C3E50] mb-4">Structured Courses</h3>
-                            <p className="text-gray-600 leading-relaxed font-light">Progressive modules that teach drawing, painting and craft skills in highly accessible, adaptable formats for every child.</p>
-                        </motion.div>
-
-                        {/* Program 3 */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.3 }}
-                            className="bg-white rounded-3xl shadow-xl p-10 hover:-translate-y-3 transition-transform duration-500 border border-gray-100 group relative overflow-hidden"
-                        >
-                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-                            <div className="bg-gradient-to-br from-[#F9D423]/20 to-[#D4AF37]/10 w-20 h-20 rounded-2xl flex items-center justify-center mb-8 group-hover:rotate-12 transition-transform duration-500">
-                                <Users className="w-10 h-10 text-[#D4AF37]" />
-                            </div>
-                            <h3 className="text-2xl font-black text-[#2C3E50] mb-4">Psychological Support</h3>
-                            <p className="text-gray-600 leading-relaxed font-light">Ongoing emotional and behavioural guidance to make learning comfortable, focused, and confidence-building.</p>
-                        </motion.div>
+                            return (
+                                <motion.div
+                                    key={`${program.title}-${index}`}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: 0.1 + index * 0.1 }}
+                                    className="bg-white rounded-3xl shadow-xl p-10 hover:-translate-y-3 transition-transform duration-500 border border-gray-100 group relative overflow-hidden"
+                                >
+                                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                                    <div
+                                        className={`bg-gradient-to-br from-[#F9D423]/20 to-[#D4AF37]/10 w-20 h-20 rounded-2xl flex items-center justify-center mb-8 ${iconRotation} transition-transform duration-500`}
+                                    >
+                                        <IconComponent className="w-10 h-10 text-[#D4AF37]" />
+                                    </div>
+                                    <h3 className="text-2xl font-black text-[#2C3E50] mb-4">{program.title}</h3>
+                                    <p className="text-gray-600 leading-relaxed font-light">{program.description}</p>
+                                </motion.div>
+                            );
+                        })}
                     </div>
                 </div>
             </section>
 
-            {/* Team */}
             <section id="team" className="py-24 bg-white relative">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-20">
@@ -236,64 +247,41 @@ const Home = () => {
                             viewport={{ once: true }}
                             className="text-4xl md:text-5xl font-black text-[#2C3E50] mb-4"
                         >
-                            About Our Team
+                            {home.team.title}
                         </motion.h2>
                         <div className="w-24 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#F9D423] mx-auto rounded-full"></div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-                        {/* Founder */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.1 }}
-                            className="text-center group bg-gray-50 rounded-3xl p-8 hover:bg-white hover:shadow-2xl transition-all duration-500 border border-transparent hover:border-gray-100"
-                        >
-                            <div className="w-40 h-40 mx-auto bg-gray-200 rounded-full mb-6 overflow-hidden border-4 border-[#D4AF37] shadow-lg group-hover:scale-110 group-hover:border-[#F9D423] transition-all duration-500">
-                                <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=Parul&backgroundColor=D4AF37`} alt="Founder" className="w-full h-full object-cover" />
-                            </div>
-                            <h3 className="text-2xl font-black text-[#2C3E50] mb-1">Parul Phoughat</h3>
-                            <p className="text-[#D4AF37] font-bold mb-4 uppercase tracking-wider text-sm">Founder</p>
-                            <p className="text-gray-600 font-light">Leads vision, designs curriculum, and manages partnerships and program development.</p>
-                        </motion.div>
-
-                        {/* Art Teacher */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.2 }}
-                            className="text-center group bg-gray-50 rounded-3xl p-8 hover:bg-white hover:shadow-2xl transition-all duration-500 border border-transparent hover:border-gray-100"
-                        >
-                            <div className="w-40 h-40 mx-auto bg-gray-200 rounded-full mb-6 overflow-hidden border-4 border-[#2C3E50] shadow-lg group-hover:scale-110 transition-all duration-500">
-                                <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=Teacher&backgroundColor=2C3E50`} alt="Art Teacher" className="w-full h-full object-cover" />
-                            </div>
-                            <h3 className="text-2xl font-black text-[#2C3E50] mb-1">Art Educators</h3>
-                            <p className="text-[#2C3E50] font-bold mb-4 uppercase tracking-wider text-sm">Specialized Teachers</p>
-                            <p className="text-gray-600 font-light">Deliver workshops, adapt techniques for accessibility, and mentor students in creative skills.</p>
-                        </motion.div>
-
-                        {/* Psychologist */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.3 }}
-                            className="text-center group bg-gray-50 rounded-3xl p-8 hover:bg-white hover:shadow-2xl transition-all duration-500 border border-transparent hover:border-gray-100"
-                        >
-                            <div className="w-40 h-40 mx-auto bg-gray-200 rounded-full mb-6 overflow-hidden border-4 border-[#F9D423] shadow-lg group-hover:scale-110 group-hover:border-[#D4AF37] transition-all duration-500">
-                                <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=Psychologist&backgroundColor=F9D423`} alt="Psychologist" className="w-full h-full object-cover" />
-                            </div>
-                            <h3 className="text-2xl font-black text-[#2C3E50] mb-1">Support Team</h3>
-                            <p className="text-[#D4AF37] font-bold mb-4 uppercase tracking-wider text-sm">Psychologists</p>
-                            <p className="text-gray-600 font-light">Provide emotional support, behaviour strategies, and ensure learning is trauma-informed.</p>
-                        </motion.div>
+                        {home.team.members.map((member, index) => (
+                            <motion.div
+                                key={`${member.name}-${index}`}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.1 + 0.1 }}
+                                className="text-center group bg-gray-50 rounded-3xl p-8 hover:bg-white hover:shadow-2xl transition-all duration-500 border border-transparent hover:border-gray-100"
+                            >
+                                <div
+                                    className={`w-40 h-40 mx-auto bg-gray-200 rounded-full mb-6 overflow-hidden border-4 ${teamBorders[index % teamBorders.length]} shadow-lg group-hover:scale-110 transition-all duration-500`}
+                                >
+                                    {member.avatar ? (
+                                        <img src={member.avatar} alt={member.name} className="w-full h-full object-cover" />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center text-gray-500 font-semibold">
+                                            Add Image
+                                        </div>
+                                    )}
+                                </div>
+                                <h3 className="text-2xl font-black text-[#2C3E50] mb-1">{member.name}</h3>
+                                <p className="text-[#D4AF37] font-bold mb-4 uppercase tracking-wider text-sm">{member.role}</p>
+                                <p className="text-gray-600 font-light">{member.description}</p>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </section>
 
-            {/* Gallery Section */}
             <section id="gallery" className="py-24 bg-gradient-to-b from-gray-50 to-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-20 relative">
@@ -303,27 +291,40 @@ const Home = () => {
                             viewport={{ once: true }}
                             className="text-5xl font-black text-[#2C3E50] mb-6"
                         >
-                            Our Gallery
+                            {home.gallery.title}
                         </motion.h2>
                         <div className="w-32 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#F9D423] mx-auto rounded-full mb-8"></div>
-                        <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light">A showcase of beautiful artwork created by our talented students.</p>
+                        <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light">{home.gallery.description}</p>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {/* Placeholder images with premium hover effects */}
-                        {[1, 2, 3, 4, 5, 6].map((item, i) => (
+                        {home.gallery.items.map((item, index) => (
                             <motion.div
-                                key={item}
+                                key={`${item.title}-${index}`}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
+                                transition={{ delay: index * 0.1 }}
                                 className="h-72 rounded-2xl overflow-hidden shadow-xl group relative cursor-pointer"
                             >
-                                <img src={`https://picsum.photos/seed/${item + 50}/600/400`} alt="Gallery Art" className="w-full h-full object-cover transform scale-105 group-hover:scale-125 transition duration-700 ease-in-out" />
+                                {item.image ? (
+                                    <img
+                                        src={item.image}
+                                        alt={item.title || 'Gallery Art'}
+                                        className="w-full h-full object-cover transform scale-105 group-hover:scale-125 transition duration-700 ease-in-out"
+                                    />
+                                ) : (
+                                    <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500 font-semibold">
+                                        Add Image
+                                    </div>
+                                )}
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#2C3E50]/90 via-[#2C3E50]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-end pb-8">
-                                    <span className="text-white font-bold text-xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">Student Art #{item}</span>
-                                    <span className="text-[#F9D423] font-semibold text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">View Masterpiece</span>
+                                    <span className="text-white font-bold text-xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                        {item.title}
+                                    </span>
+                                    <span className="text-[#F9D423] font-semibold text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">
+                                        {item.subtitle}
+                                    </span>
                                 </div>
                             </motion.div>
                         ))}
@@ -331,7 +332,6 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Workshops */}
             <section id="workshops" className="py-24 bg-white relative">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#F9D423]/5 rounded-full blur-3xl"></div>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -343,7 +343,7 @@ const Home = () => {
                                 viewport={{ once: true }}
                                 className="text-4xl md:text-5xl font-black text-[#2C3E50] mb-4"
                             >
-                                Upcoming Workshops
+                                {home.workshops.title}
                             </motion.h2>
                             <div className="w-24 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#F9D423] rounded-full mx-auto md:mx-0"></div>
                         </div>
@@ -353,71 +353,65 @@ const Home = () => {
                             viewport={{ once: true }}
                             className="mt-8 md:mt-0 w-full md:w-auto text-center"
                         >
-                            <a href="/register" className="inline-block bg-gradient-to-r from-[#2C3E50] to-[#1a252f] hover:shadow-lg hover:shadow-[#2C3E50]/30 hover:-translate-y-1 text-white px-10 py-4 rounded-full font-bold transition-all duration-300">
-                                View Full Schedule
+                            <a
+                                href={home.hero.ctaLink || '/register'}
+                                className="inline-block bg-gradient-to-r from-[#2C3E50] to-[#1a252f] hover:shadow-lg hover:shadow-[#2C3E50]/30 hover:-translate-y-1 text-white px-10 py-4 rounded-full font-bold transition-all duration-300"
+                            >
+                                {home.workshops.ctaText}
                             </a>
                         </motion.div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                        {/* Card 1 */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.1 }}
-                            className="bg-white border border-gray-100 rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group"
-                        >
-                            <div className="h-56 bg-gray-200 relative overflow-hidden">
-                                <img src="https://picsum.photos/seed/work1/600/400" alt="Workshop" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-green-700 text-xs font-bold px-4 py-1.5 rounded-full shadow-sm">
-                                    Open for Registration
+                        {home.workshops.items.map((workshop, index) => (
+                            <motion.div
+                                key={`${workshop.title}-${index}`}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.1 + index * 0.1 }}
+                                className="bg-white border border-gray-100 rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group"
+                            >
+                                <div className="h-56 bg-gray-200 relative overflow-hidden">
+                                    {workshop.image ? (
+                                        <img
+                                            src={workshop.image}
+                                            alt={workshop.title || 'Workshop'}
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center text-gray-500 font-semibold">
+                                            Add Image
+                                        </div>
+                                    )}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-green-700 text-xs font-bold px-4 py-1.5 rounded-full shadow-sm">
+                                        {workshop.status}
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="p-8">
-                                <h3 className="text-2xl font-black text-[#2C3E50] mb-3 group-hover:text-[#D4AF37] transition-colors">Finger Painting Basics</h3>
-                                <p className="text-gray-500 mb-6 font-light leading-relaxed">A gentle introduction to expressive art focusing on tactile sensory experiences.</p>
-                                <div className="flex justify-between items-center pt-6 border-t border-gray-100">
-                                    <span className="text-[#D4AF37] font-bold flex items-center bg-[#D4AF37]/10 px-4 py-2 rounded-lg">Every Saturday</span>
-                                    <a href="/register" className="text-[#2C3E50] font-bold hover:text-[#D4AF37] transition-colors flex items-center">
-                                        Register →
-                                    </a>
+                                <div className="p-8">
+                                    <h3 className="text-2xl font-black text-[#2C3E50] mb-3 group-hover:text-[#D4AF37] transition-colors">
+                                        {workshop.title}
+                                    </h3>
+                                    <p className="text-gray-500 mb-6 font-light leading-relaxed">{workshop.description}</p>
+                                    <div className="flex justify-between items-center pt-6 border-t border-gray-100">
+                                        <span className="text-[#D4AF37] font-bold flex items-center bg-[#D4AF37]/10 px-4 py-2 rounded-lg">
+                                            {workshop.schedule}
+                                        </span>
+                                        <a
+                                            href={home.hero.ctaLink || '/register'}
+                                            className="text-[#2C3E50] font-bold hover:text-[#D4AF37] transition-colors flex items-center"
+                                        >
+                                            Register -&gt;
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        </motion.div>
-
-                        {/* Card 2 */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.2 }}
-                            className="bg-white border border-gray-100 rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group"
-                        >
-                            <div className="h-56 bg-gray-200 relative overflow-hidden">
-                                <img src="https://picsum.photos/seed/work2/600/400" alt="Workshop" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-green-700 text-xs font-bold px-4 py-1.5 rounded-full shadow-sm">
-                                    Open for Registration
-                                </div>
-                            </div>
-                            <div className="p-8">
-                                <h3 className="text-2xl font-black text-[#2C3E50] mb-3 group-hover:text-[#D4AF37] transition-colors">Sensory Crafts</h3>
-                                <p className="text-gray-500 mb-6 font-light leading-relaxed">Working with clay, textures, and mild colors to stimulate creativity and motor skills.</p>
-                                <div className="flex justify-between items-center pt-6 border-t border-gray-100">
-                                    <span className="text-[#D4AF37] font-bold flex items-center bg-[#D4AF37]/10 px-4 py-2 rounded-lg">Every Sunday</span>
-                                    <a href="/register" className="text-[#2C3E50] font-bold hover:text-[#D4AF37] transition-colors flex items-center">
-                                        Register →
-                                    </a>
-                                </div>
-                            </div>
-                        </motion.div>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </section>
 
-            {/* Testimonials */}
             <section id="testimonials" className="py-24 bg-gray-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-20 relative">
@@ -427,94 +421,45 @@ const Home = () => {
                             viewport={{ once: true }}
                             className="text-5xl font-black text-[#2C3E50] mb-6"
                         >
-                            What Parents Say
+                            {home.testimonials.title}
                         </motion.h2>
                         <div className="w-32 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#F9D423] mx-auto rounded-full mb-8"></div>
-                        <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light">Heartwarming stories from our diverse community.</p>
+                        <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light">{home.testimonials.description}</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {/* Testimonial 1 */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.1 }}
-                            className="bg-white p-10 rounded-3xl shadow-lg border border-gray-100 relative group hover:-translate-y-2 transition-transform duration-300"
-                        >
-                            <Quote className="absolute top-6 right-8 w-12 h-12 text-[#D4AF37]/20 group-hover:text-[#D4AF37]/40 transition-colors duration-300" />
-                            <div className="flex items-center gap-4 mb-6">
-                                <div className="w-14 h-14 bg-gradient-to-br from-[#D4AF37] to-[#F9D423] rounded-full flex items-center justify-center text-white font-bold text-xl shadow-md">
-                                    SJ
+                        {home.testimonials.items.map((testimonial, index) => (
+                            <motion.div
+                                key={`${testimonial.name}-${index}`}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.1 + index * 0.1 }}
+                                className="bg-white p-10 rounded-3xl shadow-lg border border-gray-100 relative group hover:-translate-y-2 transition-transform duration-300"
+                            >
+                                <Quote className="absolute top-6 right-8 w-12 h-12 text-[#D4AF37]/20 group-hover:text-[#D4AF37]/40 transition-colors duration-300" />
+                                <div className="flex items-center gap-4 mb-6">
+                                    <div
+                                        className={`w-14 h-14 ${badgeStyles[index % badgeStyles.length]} rounded-full flex items-center justify-center text-white font-bold text-xl shadow-md`}
+                                    >
+                                        {testimonial.initials}
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-[#2C3E50] text-lg">{testimonial.name}</h4>
+                                        <p className="text-sm text-gray-500">{testimonial.role}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h4 className="font-bold text-[#2C3E50] text-lg">Sarah Jenkins</h4>
-                                    <p className="text-sm text-gray-500">Parent of 8-year-old</p>
+                                <p className="text-gray-600 leading-relaxed italic z-10 relative">"{testimonial.quote}"</p>
+                                <div className="flex gap-1 mt-6">
+                                    {[1, 2, 3, 4, 5].map((star) => (
+                                        <Star key={star} className="w-5 h-5 fill-[#F9D423] text-[#F9D423]" />
+                                    ))}
                                 </div>
-                            </div>
-                            <p className="text-gray-600 leading-relaxed italic z-10 relative">
-                                "The workshops at Limitless Art have been a game changer for my son. He has found a beautiful way to express himself through colors. The teachers are so incredibly patient and kind."
-                            </p>
-                            <div className="flex gap-1 mt-6">
-                                {[1, 2, 3, 4, 5].map(star => <Star key={star} className="w-5 h-5 fill-[#F9D423] text-[#F9D423]" />)}
-                            </div>
-                        </motion.div>
-
-                        {/* Testimonial 2 */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.2 }}
-                            className="bg-white p-10 rounded-3xl shadow-lg border border-gray-100 relative group hover:-translate-y-2 transition-transform duration-300"
-                        >
-                            <Quote className="absolute top-6 right-8 w-12 h-12 text-[#D4AF37]/20 group-hover:text-[#D4AF37]/40 transition-colors duration-300" />
-                            <div className="flex items-center gap-4 mb-6">
-                                <div className="w-14 h-14 bg-[#2C3E50] rounded-full flex items-center justify-center text-white font-bold text-xl shadow-md">
-                                    MR
-                                </div>
-                                <div>
-                                    <h4 className="font-bold text-[#2C3E50] text-lg">Michael Rodriguez</h4>
-                                    <p className="text-sm text-gray-500">Parent of 12-year-old</p>
-                                </div>
-                            </div>
-                            <p className="text-gray-600 leading-relaxed italic z-10 relative">
-                                "Finding an inclusive space where my daughter feels truly accepted was hard. Since joining Limitless Art, her confidence has skyrocketed, and her sensory crafts are beautifully displayed in our home."
-                            </p>
-                            <div className="flex gap-1 mt-6">
-                                {[1, 2, 3, 4, 5].map(star => <Star key={star} className="w-5 h-5 fill-[#F9D423] text-[#F9D423]" />)}
-                            </div>
-                        </motion.div>
-
-                        {/* Testimonial 3 */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.3 }}
-                            className="bg-white p-10 rounded-3xl shadow-lg border border-gray-100 relative group hover:-translate-y-2 transition-transform duration-300"
-                        >
-                            <Quote className="absolute top-6 right-8 w-12 h-12 text-[#D4AF37]/20 group-hover:text-[#D4AF37]/40 transition-colors duration-300" />
-                            <div className="flex items-center gap-4 mb-6">
-                                <div className="w-14 h-14 bg-gradient-to-br from-[#2C3E50] to-gray-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-md">
-                                    AP
-                                </div>
-                                <div>
-                                    <h4 className="font-bold text-[#2C3E50] text-lg">Anita Patel</h4>
-                                    <p className="text-sm text-gray-500">Parent of 10-year-old</p>
-                                </div>
-                            </div>
-                            <p className="text-gray-600 leading-relaxed italic z-10 relative">
-                                "The psychological support integrated into the art program is brilliant. It isn't just an art class; it's a therapeutic environment where our kids can thrive without pressure or judgment."
-                            </p>
-                            <div className="flex gap-1 mt-6">
-                                {[1, 2, 3, 4, 5].map(star => <Star key={star} className="w-5 h-5 fill-[#F9D423] text-[#F9D423]" />)}
-                            </div>
-                        </motion.div>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </section>
-
         </div>
     );
 };
