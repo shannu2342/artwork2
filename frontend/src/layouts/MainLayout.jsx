@@ -22,23 +22,25 @@ const MainLayout = () => {
             {/* Navigation */}
             <nav className="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-100">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-20">
-                        <div className="flex items-center">
-                            <Link to="/" className="flex-shrink-0 flex items-center">
+                    <div className="flex items-center justify-between h-20 gap-6">
+                        <div className="flex items-center -ml-1 md:-ml-2">
+                            <Link to="/" className="flex-shrink-0 flex items-center gap-3">
                                 <img className="h-16 w-auto" src="/logo.jpg" alt="Limitless Art Logo" />
-                                <span className="ml-3 text-2xl font-black text-[#D4AF37] uppercase tracking-wide">Limitless Art</span>
+                                <span className="text-2xl font-black text-[#D4AF37] uppercase tracking-wide leading-none">Limitless Art</span>
                             </Link>
                         </div>
 
                         {/* Desktop Menu */}
-                        <div className="hidden md:flex md:items-center md:space-x-8">
-                            {navLinks.map((link) => (
-                                <a key={link.name} href={link.href} className="relative text-[#2C3E50] font-semibold text-sm transition-colors group px-1 py-2">
-                                    {link.name}
-                                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] transition-all duration-300 group-hover:w-full"></span>
-                                </a>
-                            ))}
-                            <Link to="/register" className="ml-4 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] text-[#1a252f] hover:shadow-lg hover:shadow-[#D4AF37]/30 hover:-translate-y-0.5 px-7 py-2.5 rounded-full font-bold transition-all duration-300 transform shadow-md relative overflow-hidden group">
+                        <div className="hidden md:flex md:flex-1 md:items-center md:justify-end md:pl-8 lg:pl-10">
+                            <div className="flex items-center gap-6 lg:gap-8">
+                                {navLinks.map((link) => (
+                                    <a key={link.name} href={link.href} className="relative whitespace-nowrap text-[#2C3E50] font-semibold text-sm transition-colors group px-1 py-2">
+                                        {link.name}
+                                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] transition-all duration-300 group-hover:w-full"></span>
+                                    </a>
+                                ))}
+                            </div>
+                            <Link to="/register" className="ml-6 lg:ml-8 md:translate-x-1 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] text-[#1a252f] hover:shadow-lg hover:shadow-[#D4AF37]/30 hover:-translate-y-0.5 px-7 py-2.5 rounded-full font-bold transition-all duration-300 transform shadow-md relative overflow-hidden group">
                                 <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-10"></span>
                                 <span className="relative">Register</span>
                             </Link>
