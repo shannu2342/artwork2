@@ -207,7 +207,34 @@ const Home = () => {
                         <p className="text-xl text-gray-600 max-w-3xl mx-auto font-light">{home.whatWeDo.description}</p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-14">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-14">
+                        {home.programs.map((program, index) => {
+                            const IconComponent = resolveIcon(program.icon, Palette);
+                            const iconRotation = index % 2 === 0 ? 'group-hover:rotate-12' : 'group-hover:-rotate-12';
+
+                            return (
+                                <motion.div
+                                    key={`${program.title}-${index}`}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: 0.1 + index * 0.1 }}
+                                    className="bg-white rounded-3xl shadow-xl p-10 hover:-translate-y-3 transition-transform duration-500 border border-gray-100 group relative overflow-hidden"
+                                >
+                                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                                    <div
+                                        className={`bg-gradient-to-br from-[#F9D423]/20 to-[#D4AF37]/10 w-20 h-20 rounded-2xl flex items-center justify-center mb-8 ${iconRotation} transition-transform duration-500`}
+                                    >
+                                        <IconComponent className="w-10 h-10 text-[#D4AF37]" />
+                                    </div>
+                                    <h3 className="text-2xl font-black text-[#2C3E50] mb-4">{program.title}</h3>
+                                    <p className="text-gray-600 leading-relaxed font-light">{program.description}</p>
+                                </motion.div>
+                            );
+                        })}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <motion.div
                             initial={{ opacity: 0, x: -30 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -241,33 +268,6 @@ const Home = () => {
                                 {home.missionVision.visionText}
                             </p>
                         </motion.div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                        {home.programs.map((program, index) => {
-                            const IconComponent = resolveIcon(program.icon, Palette);
-                            const iconRotation = index % 2 === 0 ? 'group-hover:rotate-12' : 'group-hover:-rotate-12';
-
-                            return (
-                                <motion.div
-                                    key={`${program.title}-${index}`}
-                                    initial={{ opacity: 0, y: 30 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: 0.1 + index * 0.1 }}
-                                    className="bg-white rounded-3xl shadow-xl p-10 hover:-translate-y-3 transition-transform duration-500 border border-gray-100 group relative overflow-hidden"
-                                >
-                                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-                                    <div
-                                        className={`bg-gradient-to-br from-[#F9D423]/20 to-[#D4AF37]/10 w-20 h-20 rounded-2xl flex items-center justify-center mb-8 ${iconRotation} transition-transform duration-500`}
-                                    >
-                                        <IconComponent className="w-10 h-10 text-[#D4AF37]" />
-                                    </div>
-                                    <h3 className="text-2xl font-black text-[#2C3E50] mb-4">{program.title}</h3>
-                                    <p className="text-gray-600 leading-relaxed font-light">{program.description}</p>
-                                </motion.div>
-                            );
-                        })}
                     </div>
                 </div>
             </section>
