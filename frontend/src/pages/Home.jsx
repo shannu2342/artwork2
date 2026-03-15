@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Palette, Users, Heart, Star, BookOpen, Shield, Quote } from 'lucide-react';
+import { Palette, Users, Heart, Star, BookOpen, Shield, Quote, Mail, Phone, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useSiteContent } from '../hooks/useSiteContent';
 
@@ -531,6 +531,82 @@ const Home = () => {
                                 </div>
                             </motion.div>
                         ))}
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact-us" className="py-24 bg-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center mb-14">
+                        <motion.h2
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-4xl md:text-5xl font-black text-[#2C3E50] mb-4"
+                        >
+                            Contact Us
+                        </motion.h2>
+                        <div className="w-24 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#F9D423] mx-auto rounded-full mb-6"></div>
+                        <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                            Need help with registration or program details? Reach out and our team will respond quickly.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="bg-gray-50 border border-gray-100 rounded-3xl p-8 shadow-sm">
+                            <h3 className="text-2xl font-black text-[#2C3E50] mb-6">Contact Information</h3>
+                            <div className="space-y-5">
+                                <div className="flex items-start gap-3">
+                                    <Mail className="w-5 h-5 text-[#D4AF37] mt-0.5" />
+                                    <div>
+                                        <p className="font-semibold text-[#2C3E50]">Email</p>
+                                        <a href="mailto:limitlessart.org@gmail.com" className="text-gray-600 hover:text-[#D4AF37]">
+                                            limitlessart.org@gmail.com
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-3">
+                                    <Phone className="w-5 h-5 text-[#D4AF37] mt-0.5" />
+                                    <div>
+                                        <p className="font-semibold text-[#2C3E50]">Phone</p>
+                                        <a href="tel:+919654168888" className="text-gray-600 hover:text-[#D4AF37]">
+                                            +91 96541 68888
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-3">
+                                    <MapPin className="w-5 h-5 text-[#D4AF37] mt-0.5" />
+                                    <div>
+                                        <p className="font-semibold text-[#2C3E50]">Address</p>
+                                        <p className="text-gray-600">Delhi NCR, India</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="bg-[#2C3E50] rounded-3xl p-8 text-white shadow-lg flex flex-col justify-between">
+                            <div>
+                                <h3 className="text-2xl font-black text-[#F9D423] mb-4">Let’s Talk</h3>
+                                <p className="text-gray-200 leading-relaxed">
+                                    For full enquiry form and program-specific questions, use our Contact page. For immediate help,
+                                    use the WhatsApp button at bottom-right.
+                                </p>
+                            </div>
+                            <div className="mt-8 flex flex-col sm:flex-row gap-3">
+                                <Link
+                                    to="/contact"
+                                    className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-bold bg-gradient-to-r from-[#F9D423] to-[#D4AF37] text-[#1a252f] hover:brightness-95 transition"
+                                >
+                                    Open Contact Form
+                                </Link>
+                                <Link
+                                    to="/register"
+                                    className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-bold border border-white/30 hover:bg-white/10 transition"
+                                >
+                                    Go to Register
+                                </Link>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>

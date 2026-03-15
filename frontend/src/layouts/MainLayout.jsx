@@ -15,7 +15,7 @@ const MainLayout = () => {
         { name: 'Gallery', href: '/#gallery' },
         { name: 'Workshops', href: '/#workshops' },
         { name: 'Testimonials', href: '/#testimonials' },
-        { name: 'Contact Us', href: '/contact' },
+        { name: 'Contact Us', href: '/#contact-us' },
     ];
 
     return (
