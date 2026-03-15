@@ -1,4 +1,19 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+const normalizeApiBase = (rawBase) => {
+    let cleaned = (rawBase || 'http://localhost:5000').replace(/\/+$/, '');
+
+    if (cleaned.endsWith('/api/content')) {
+        cleaned = cleaned.replace(/\/api\/content$/, '/api');
+        return cleaned;
+    }
+
+    if (cleaned.endsWith('/content')) {
+        cleaned = cleaned.replace(/\/content$/, '');
+    }
+
+    return cleaned.endsWith('/api') ? cleaned : `${cleaned}/api`;
+};
+
+const API_BASE_URL = normalizeApiBase(import.meta.env.VITE_API_BASE_URL);
 
 const siteContentUrl = (key) => `${API_BASE_URL}/site-content/${key}`;
 

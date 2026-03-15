@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, Loader2 } from 'lucide-react';
+import { API_BASE } from '../services/siteContentService';
 
 const Registration = () => {
     const [formData, setFormData] = useState({
@@ -22,8 +23,7 @@ const Registration = () => {
         e.preventDefault();
         setStatus('loading');
         try {
-            const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
-            const backendUrl = `${apiBaseUrl}/content`;
+            const backendUrl = `${API_BASE}/content`;
             const res = await fetch(backendUrl, {
                 method: 'POST',
                 headers: {
@@ -44,6 +44,8 @@ const Registration = () => {
                 // Reset success message after 5 seconds
                 setTimeout(() => setStatus('idle'), 5000);
             } else {
+                const errorText = await res.text();
+                console.error('Registration request failed:', res.status, errorText);
                 setStatus('error');
             }
         } catch (error) {
