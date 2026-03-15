@@ -13,41 +13,47 @@ const Registration = () => {
         interests: '',
         message: ''
     });
-    const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
+    const [status, setStatus] = useState('idle'); // idle | loading | success | error
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+    const handleChange = (event) => {
+        setFormData((current) => ({ ...current, [event.target.name]: event.target.value }));
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         setStatus('loading');
+
         try {
-            const backendUrl = `${API_BASE}/content`;
-            const res = await fetch(backendUrl, {
+            const response = await fetch(`${API_BASE}/content`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    title: `Registration for ${formData.childName}`,
+                    title: `Registration for ${formData.childName || 'Child'}`,
                     type: 'Registration',
                     data: formData
                 })
             });
 
-            if (res.ok) {
-                setStatus('success');
-                setFormData({
-                    parentName: '', childName: '', age: '', email: '', phone: '', interests: '', message: ''
-                });
-                // Reset success message after 5 seconds
-                setTimeout(() => setStatus('idle'), 5000);
-            } else {
-                const errorText = await res.text();
-                console.error('Registration request failed:', res.status, errorText);
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Registration request failed:', response.status, errorText);
                 setStatus('error');
+                return;
             }
+
+            setStatus('success');
+            setFormData({
+                parentName: '',
+                childName: '',
+                age: '',
+                email: '',
+                phone: '',
+                interests: '',
+                message: ''
+            });
+            setTimeout(() => setStatus('idle'), 5000);
         } catch (error) {
             console.error('Registration failed:', error);
             setStatus('error');
@@ -66,7 +72,9 @@ const Registration = () => {
                     <div className="bg-[#2C3E50] px-8 py-10 text-center relative overflow-hidden">
                         <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
                         <h2 className="text-3xl font-extrabold text-[#D4AF37] relative z-10">Join Limitless Art</h2>
-                        <p className="mt-2 text-gray-300 relative z-10 text-lg">Enroll your child in our upcoming creative workshops.</p>
+                        <p className="mt-2 text-gray-300 relative z-10 text-lg">
+                            Enroll your child in our upcoming creative workshops.
+                        </p>
                     </div>
 
                     <div className="px-8 py-10">
@@ -78,7 +86,7 @@ const Registration = () => {
                             >
                                 <CheckCircle className="w-20 h-20 text-green-500 mb-6" />
                                 <h3 className="text-2xl font-bold text-[#2C3E50] mb-2">Registration Successful!</h3>
-                                <p className="text-gray-600">We have received your details and will get in touch with you shortly.</p>
+                                <p className="text-gray-600">We have received your details and will contact you shortly.</p>
                                 <button
                                     onClick={() => setStatus('idle')}
                                     className="mt-8 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-3 px-8 rounded-full transition-colors"
@@ -88,42 +96,103 @@ const Registration = () => {
                             </motion.div>
                         ) : (
                             <form onSubmit={handleSubmit} className="space-y-6">
-                                {status === 'error' && (
+                                {status === 'error' ? (
                                     <div className="bg-red-50 text-red-600 p-4 rounded-lg text-sm mb-6 border border-red-200 font-medium">
-                                        An error occurred while submitting. Please try again later.
+                                        Could not submit right now. Please try again.
                                     </div>
-                                )}
+                                ) : null}
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <label className="block text-sm font-bold text-gray-700 mb-1">Parent/Guardian Name</label>
-                                        <input type="text" name="parentName" value={formData.parentName} required className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent outline-none transition-all" onChange={handleChange} placeholder="John Doe" />
+                                        <input
+                                            type="text"
+                                            name="parentName"
+                                            value={formData.parentName}
+                                            required
+                                            className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent outline-none transition-all"
+                                            onChange={handleChange}
+                                            placeholder="John Doe"
+                                        />
                                     </div>
                                     <div>
                                         <label className="block text-sm font-bold text-gray-700 mb-1">Child's Name</label>
-                                        <input type="text" name="childName" value={formData.childName} required className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent outline-none transition-all" onChange={handleChange} placeholder="Jane Doe" />
+                                        <input
+                                            type="text"
+                                            name="childName"
+                                            value={formData.childName}
+                                            required
+                                            className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent outline-none transition-all"
+                                            onChange={handleChange}
+                                            placeholder="Jane Doe"
+                                        />
                                     </div>
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <label className="block text-sm font-bold text-gray-700 mb-1">Child's Age</label>
-                                        <input type="number" name="age" value={formData.age} min="3" max="25" required className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent outline-none transition-all" onChange={handleChange} placeholder="E.g. 8" />
+                                        <input
+                                            type="number"
+                                            name="age"
+                                            value={formData.age}
+                                            min="3"
+                                            max="25"
+                                            required
+                                            className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent outline-none transition-all"
+                                            onChange={handleChange}
+                                            placeholder="E.g. 8"
+                                        />
                                     </div>
                                     <div>
                                         <label className="block text-sm font-bold text-gray-700 mb-1">Phone Number</label>
-                                        <input type="tel" name="phone" value={formData.phone} required className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent outline-none transition-all" onChange={handleChange} placeholder="+91 9876543210" />
+                                        <input
+                                            type="tel"
+                                            name="phone"
+                                            value={formData.phone}
+                                            required
+                                            className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent outline-none transition-all"
+                                            onChange={handleChange}
+                                            placeholder="+91 9876543210"
+                                        />
                                     </div>
                                 </div>
 
                                 <div>
                                     <label className="block text-sm font-bold text-gray-700 mb-1">Email Address</label>
-                                    <input type="email" name="email" value={formData.email} required className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent outline-none transition-all" onChange={handleChange} placeholder="johndoe@example.com" />
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        required
+                                        className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent outline-none transition-all"
+                                        onChange={handleChange}
+                                        placeholder="johndoe@example.com"
+                                    />
                                 </div>
 
                                 <div>
                                     <label className="block text-sm font-bold text-gray-700 mb-1">Child's Core Interests & Needs</label>
-                                    <textarea name="interests" value={formData.interests} rows="4" className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent outline-none transition-all resize-none" placeholder="E.g., loves bright colors, needs a quiet environment, enjoys tactical play..." onChange={handleChange}></textarea>
+                                    <textarea
+                                        name="interests"
+                                        value={formData.interests}
+                                        rows="3"
+                                        className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent outline-none transition-all resize-none"
+                                        placeholder="E.g., enjoys colors, needs a quiet environment..."
+                                        onChange={handleChange}
+                                    ></textarea>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-bold text-gray-700 mb-1">Message</label>
+                                    <textarea
+                                        name="message"
+                                        value={formData.message}
+                                        rows="3"
+                                        className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent outline-none transition-all resize-none"
+                                        placeholder="Any additional information..."
+                                        onChange={handleChange}
+                                    ></textarea>
                                 </div>
 
                                 <div className="pt-2">

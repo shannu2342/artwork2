@@ -6,6 +6,7 @@ import AdminLayout from './layouts/AdminLayout';
 import AdminDashboard from './pages/AdminDashboard';
 import Login from './pages/Login';
 import AdminHomeContent from './pages/AdminHomeContent';
+import ContactUs from './pages/ContactUs';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
           <Route path="register" element={<Registration />} />
+          <Route path="contact" element={<ContactUs />} />
         </Route>
 
         {/* Admin Routes */}

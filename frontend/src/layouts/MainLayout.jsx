@@ -2,6 +2,7 @@ import { Outlet, Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import FloatingWhatsApp from '../components/FloatingWhatsApp';
 
 const MainLayout = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +16,7 @@ const MainLayout = () => {
         { name: 'Gallery', href: '/#gallery' },
         { name: 'Workshops', href: '/#workshops' },
         { name: 'Testimonials', href: '/#testimonials' },
+        { name: 'Contact Us', href: '/contact' },
     ];
 
     return (
@@ -120,6 +122,7 @@ const MainLayout = () => {
                                 <li><a href="/#who-we-are" className="hover:text-white transition-colors">Who We Are</a></li>
                                 <li><a href="/#workshops" className="hover:text-white transition-colors">Workshops</a></li>
                                 <li><Link to="/register" className="hover:text-white transition-colors">Registration</Link></li>
+                                <li><Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
                             </ul>
                         </div>
                         <div>
@@ -134,6 +137,8 @@ const MainLayout = () => {
                     </div>
                 </div>
             </footer>
+
+            <FloatingWhatsApp />
         </div>
     );
 };

@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Palette, Users, Heart, Star, BookOpen, Shield, Quote } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useSiteContent } from '../hooks/useSiteContent';
 
 const iconMap = {
@@ -20,12 +22,42 @@ const badgeStyles = [
 const teamBorders = ['border-[#D4AF37]', 'border-[#2C3E50]', 'border-[#F9D423]'];
 
 const resolveIcon = (iconName, fallback) => iconMap[iconName] || fallback;
+const externalLinkPattern = /^(https?:\/\/|mailto:|tel:)/i;
+
+const normalizeCtaLink = (rawLink) => {
+    const link = (rawLink || '').trim();
+    if (!link) {
+        return '/register';
+    }
+
+    if (externalLinkPattern.test(link)) {
+        return link;
+    }
+
+    const normalized = link.startsWith('/') ? link : `/${link}`;
+    const allowedInternalLinks = new Set(['/', '/register', '/contact']);
+    return allowedInternalLinks.has(normalized) ? normalized : '/register';
+};
 
 const Home = () => {
     const { content } = useSiteContent();
     const home = content.home;
+    const [selectedGalleryItem, setSelectedGalleryItem] = useState(null);
 
     const heroImage = home.hero.backgroundImage || '';
+    const heroCtaLink = normalizeCtaLink(home.hero.ctaLink);
+    const isHeroCtaExternal = externalLinkPattern.test(heroCtaLink);
+
+    useEffect(() => {
+        const onKeyDown = (event) => {
+            if (event.key === 'Escape') {
+                setSelectedGalleryItem(null);
+            }
+        };
+
+        window.addEventListener('keydown', onKeyDown);
+        return () => window.removeEventListener('keydown', onKeyDown);
+    }, []);
 
     return (
         <div className="w-full">
@@ -73,13 +105,25 @@ const Home = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.5 }}
                     >
-                        <a
-                            href={home.hero.ctaLink || '/register'}
-                            className="group relative inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-[#1a252f] transition-all duration-300 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] rounded-full shadow-2xl hover:scale-105 hover:shadow-[#D4AF37]/50 focus:outline-none overflow-hidden"
-                        >
-                            <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></span>
-                            <span className="relative">{home.hero.ctaText}</span>
-                        </a>
+                        {isHeroCtaExternal ? (
+                            <a
+                                href={heroCtaLink}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="group relative inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-[#1a252f] transition-all duration-300 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] rounded-full shadow-2xl hover:scale-105 hover:shadow-[#D4AF37]/50 focus:outline-none overflow-hidden"
+                            >
+                                <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></span>
+                                <span className="relative">{home.hero.ctaText}</span>
+                            </a>
+                        ) : (
+                            <Link
+                                to={heroCtaLink}
+                                className="group relative inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-[#1a252f] transition-all duration-300 bg-gradient-to-r from-[#F9D423] to-[#D4AF37] rounded-full shadow-2xl hover:scale-105 hover:shadow-[#D4AF37]/50 focus:outline-none overflow-hidden"
+                            >
+                                <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></span>
+                                <span className="relative">{home.hero.ctaText}</span>
+                            </Link>
+                        )}
                     </motion.div>
                 </div>
 
@@ -305,7 +349,20 @@ const Home = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
-                                className="h-72 rounded-2xl overflow-hidden shadow-xl group relative cursor-pointer"
+                                className={`h-72 rounded-2xl overflow-hidden shadow-xl group relative ${item.image ? 'cursor-pointer' : 'cursor-not-allowed'}`}
+                                role="button"
+                                tabIndex={item.image ? 0 : -1}
+                                onClick={() => item.image && setSelectedGalleryItem(item)}
+                                onKeyDown={(event) => {
+                                    if (!item.image) {
+                                        return;
+                                    }
+
+                                    if (event.key === 'Enter' || event.key === ' ') {
+                                        event.preventDefault();
+                                        setSelectedGalleryItem(item);
+                                    }
+                                }}
                             >
                                 {item.image ? (
                                     <img
@@ -353,12 +410,23 @@ const Home = () => {
                             viewport={{ once: true }}
                             className="mt-8 md:mt-0 w-full md:w-auto text-center"
                         >
-                            <a
-                                href={home.hero.ctaLink || '/register'}
-                                className="inline-block bg-gradient-to-r from-[#2C3E50] to-[#1a252f] hover:shadow-lg hover:shadow-[#2C3E50]/30 hover:-translate-y-1 text-white px-10 py-4 rounded-full font-bold transition-all duration-300"
-                            >
-                                {home.workshops.ctaText}
-                            </a>
+                            {isHeroCtaExternal ? (
+                                <a
+                                    href={heroCtaLink}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="inline-block bg-gradient-to-r from-[#2C3E50] to-[#1a252f] hover:shadow-lg hover:shadow-[#2C3E50]/30 hover:-translate-y-1 text-white px-10 py-4 rounded-full font-bold transition-all duration-300"
+                                >
+                                    {home.workshops.ctaText}
+                                </a>
+                            ) : (
+                                <Link
+                                    to={heroCtaLink}
+                                    className="inline-block bg-gradient-to-r from-[#2C3E50] to-[#1a252f] hover:shadow-lg hover:shadow-[#2C3E50]/30 hover:-translate-y-1 text-white px-10 py-4 rounded-full font-bold transition-all duration-300"
+                                >
+                                    {home.workshops.ctaText}
+                                </Link>
+                            )}
                         </motion.div>
                     </div>
 
@@ -398,12 +466,23 @@ const Home = () => {
                                         <span className="text-[#D4AF37] font-bold flex items-center bg-[#D4AF37]/10 px-4 py-2 rounded-lg">
                                             {workshop.schedule}
                                         </span>
-                                        <a
-                                            href={home.hero.ctaLink || '/register'}
-                                            className="text-[#2C3E50] font-bold hover:text-[#D4AF37] transition-colors flex items-center"
-                                        >
-                                            Register -&gt;
-                                        </a>
+                                        {isHeroCtaExternal ? (
+                                            <a
+                                                href={heroCtaLink}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="text-[#2C3E50] font-bold hover:text-[#D4AF37] transition-colors flex items-center"
+                                            >
+                                                Register -&gt;
+                                            </a>
+                                        ) : (
+                                            <Link
+                                                to={heroCtaLink}
+                                                className="text-[#2C3E50] font-bold hover:text-[#D4AF37] transition-colors flex items-center"
+                                            >
+                                                Register -&gt;
+                                            </Link>
+                                        )}
                                     </div>
                                 </div>
                             </motion.div>
@@ -460,6 +539,35 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+
+            {selectedGalleryItem ? (
+                <div
+                    className="fixed inset-0 z-[120] bg-black/80 backdrop-blur-sm flex items-center justify-center px-4"
+                    onClick={() => setSelectedGalleryItem(null)}
+                >
+                    <div
+                        className="relative w-full max-w-5xl bg-white rounded-2xl overflow-hidden shadow-2xl"
+                        onClick={(event) => event.stopPropagation()}
+                    >
+                        <button
+                            type="button"
+                            onClick={() => setSelectedGalleryItem(null)}
+                            className="absolute top-4 right-4 z-10 bg-black/60 text-white px-3 py-1 rounded-lg text-sm font-semibold hover:bg-black/80"
+                        >
+                            Close
+                        </button>
+                        <img
+                            src={selectedGalleryItem.image}
+                            alt={selectedGalleryItem.title || 'Gallery Art'}
+                            className="w-full max-h-[80dvh] object-contain bg-black"
+                        />
+                        <div className="px-6 py-4">
+                            <h3 className="text-xl font-bold text-[#2C3E50]">{selectedGalleryItem.title || 'Artwork'}</h3>
+                            <p className="text-sm text-gray-500 mt-1">Press `Esc` to close</p>
+                        </div>
+                    </div>
+                </div>
+            ) : null}
         </div>
     );
 };
