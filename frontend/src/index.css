@@ -5,14 +5,26 @@ html,
 body,
 #root {
   width: 100%;
+  min-width: 100%;
   min-height: 100%;
   margin: 0;
   padding: 0;
 }
 
 #root {
-  max-width: none;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
   text-align: initial;
+}
+
+#root > * {
+  width: 100%;
+}
+
+/* Full-bleed layout: remove Tailwind container cap that leaves side gaps on large screens */
+.max-w-7xl {
+  max-width: 100% !important;
 }
 
 @theme {
@@ -27,6 +39,7 @@ body {
   font-family: var(--font-sans);
   background-color: #fafbfc;
   color: var(--color-secondary);
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
