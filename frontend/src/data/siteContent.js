@@ -10,7 +10,7 @@ export const defaultSiteContent = {
             backgroundImage: '/hero.png'
         },
         whoWeAre: {
-            title: 'Who We Are',
+            title: 'About',
             description:
                 "Limitless Art is an inclusive organisation dedicated to nurturing the abilities of specially-abled children through art and practical skill learning. We identify each child's interests and tailor experiences that build creative competence, emotional resilience, and practical abilities. Our supportive environment encourages self-expression, independence and pathways to meaningful opportunities."
         },
@@ -29,7 +29,7 @@ export const defaultSiteContent = {
                 'To build a global inclusive platform where specially-abled artists can learn, grow, showcase their talent, and earn from their creativity.'
         },
         whatWeDo: {
-            title: 'What We Do',
+            title: 'Programs',
             description:
                 'We use interest-based learning that adapts to each child\'s comfort and strengths, blending technical skill training with emotional support.'
         },
@@ -54,7 +54,7 @@ export const defaultSiteContent = {
             }
         ],
         team: {
-            title: 'About Our Team',
+            title: 'Mentors',
             members: [
                 {
                     name: 'Parul Phoughat',

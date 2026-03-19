@@ -9,9 +9,9 @@ const MainLayout = () => {
 
     const navLinks = [
         { name: 'Home', href: '/' },
-        { name: 'Who We Are', href: '/#who-we-are' },
-        { name: 'What We Do', href: '/#what-we-do' },
-        { name: 'Team', href: '/#team' },
+        { name: 'About', href: '/#who-we-are' },
+        { name: 'Programs', href: '/#what-we-do' },
+        { name: 'Mentors', href: '/#team' },
         { name: 'Gallery', href: '/#gallery' },
         { name: 'Workshops', href: '/#workshops' },
         { name: 'Testimonials', href: '/#testimonials' },
@@ -118,7 +118,8 @@ const MainLayout = () => {
                             <h3 className="text-lg font-bold mb-4 border-b border-[#D4AF37] pb-2 inline-block">Quick Links</h3>
                             <ul className="space-y-2 text-gray-300">
                                 <li><a href="/" className="hover:text-white transition-colors">Home</a></li>
-                                <li><a href="/#who-we-are" className="hover:text-white transition-colors">Who We Are</a></li>
+                                <li><a href="/#who-we-are" className="hover:text-white transition-colors">About</a></li>
+                                <li><a href="/#what-we-do" className="hover:text-white transition-colors">Programs</a></li>
                                 <li><a href="/#workshops" className="hover:text-white transition-colors">Workshops</a></li>
                                 <li><Link to="/register" className="hover:text-white transition-colors">Registration</Link></li>
                                 <li><Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>

@@ -347,7 +347,7 @@ const AdminHomeContent = () => {
                 />
             </SectionCard>
 
-            <SectionCard title="Who We Are" description="Organisation intro content.">
+            <SectionCard title="About" description="Organisation intro content.">
                 <EditableTextField
                     label="Section Title"
                     value={home.whoWeAre.title}
@@ -393,7 +393,7 @@ const AdminHomeContent = () => {
                 </div>
             </SectionCard>
 
-            <SectionCard title="Mission & Vision (Inside What We Do)" description="These cards appear inside the What We Do section.">
+            <SectionCard title="Mission & Vision (Inside Programs)" description="These cards appear inside the Programs section.">
                 <EditableTextField
                     label="Mission Title"
                     value={home.missionVision.missionTitle}
@@ -418,7 +418,7 @@ const AdminHomeContent = () => {
                 />
             </SectionCard>
 
-            <SectionCard title="What We Do" description="Program introduction and cards.">
+            <SectionCard title="Programs" description="Program introduction and cards.">
                 <EditableTextField
                     label="Section Title"
                     value={home.whatWeDo.title}
@@ -473,7 +473,7 @@ const AdminHomeContent = () => {
                 </div>
             </SectionCard>
 
-            <SectionCard title="Team Section" description="Team cards with photo and text.">
+            <SectionCard title="Mentors Section" description="Mentor cards with photo and text.">
                 <EditableTextField
                     label="Section Title"
                     value={home.team.title}
@@ -484,7 +484,7 @@ const AdminHomeContent = () => {
                     {home.team.members.map((member, index) => (
                         <ItemCard
                             key={`${member.name}-${index}`}
-                            title={`Team Member ${index + 1}`}
+                            title={`Mentor ${index + 1}`}
                             onRemove={() => void removeArrayItem(['home', 'team', 'members'], index)}
                         >
                             <EditableImageField
@@ -516,16 +516,16 @@ const AdminHomeContent = () => {
                         type="button"
                         onClick={() =>
                             void addArrayItem(['home', 'team', 'members'], {
-                                name: 'New Team Member',
+                                name: 'New Mentor',
                                 role: 'Role',
-                                description: 'Team member description',
+                                description: 'Mentor description',
                                 avatar: ''
                             })
                         }
                         className="inline-flex items-center rounded-lg border border-gray-300 px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-100"
                     >
                         <Plus className="w-3.5 h-3.5 mr-1.5" />
-                        Add Team Member
+                        Add Mentor
                     </button>
                 </div>
             </SectionCard>

@@ -39,6 +39,14 @@ const normalizeCtaLink = (rawLink) => {
     return allowedInternalLinks.has(normalized) ? normalized : '/register';
 };
 
+const displaySectionTitle = (value, legacyTitle, nextTitle) => {
+    const title = (value || '').trim();
+    if (!title || title.toLowerCase() === legacyTitle.toLowerCase()) {
+        return nextTitle;
+    }
+    return title;
+};
+
 const Home = () => {
     const { content } = useSiteContent();
     const home = content.home;
@@ -47,6 +55,9 @@ const Home = () => {
     const heroImage = home.hero.backgroundImage || '';
     const heroCtaLink = normalizeCtaLink(home.hero.ctaLink);
     const isHeroCtaExternal = externalLinkPattern.test(heroCtaLink);
+    const aboutTitle = displaySectionTitle(home.whoWeAre.title, 'Who We Are', 'About');
+    const programsTitle = displaySectionTitle(home.whatWeDo.title, 'What We Do', 'Programs');
+    const mentorsTitle = displaySectionTitle(home.team.title, 'About Our Team', 'Mentors');
 
     useEffect(() => {
         const onKeyDown = (event) => {
@@ -150,7 +161,7 @@ const Home = () => {
                             viewport={{ once: true }}
                             className="text-4xl md:text-5xl font-black text-[#2C3E50] mb-4"
                         >
-                            {home.whoWeAre.title}
+                            {aboutTitle}
                         </motion.h2>
                         <div className="w-24 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#F9D423] mx-auto rounded-full"></div>
                     </div>
@@ -201,7 +212,7 @@ const Home = () => {
                             viewport={{ once: true }}
                             className="text-5xl font-black text-[#2C3E50] mb-6"
                         >
-                            {home.whatWeDo.title}
+                            {programsTitle}
                         </motion.h2>
                         <div className="w-32 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#F9D423] mx-auto rounded-full mb-8"></div>
                         <p className="text-xl text-gray-600 max-w-3xl mx-auto font-light">{home.whatWeDo.description}</p>
@@ -286,7 +297,7 @@ const Home = () => {
                             viewport={{ once: true }}
                             className="text-4xl md:text-5xl font-black text-[#2C3E50] mb-4"
                         >
-                            {home.team.title}
+                            {mentorsTitle}
                         </motion.h2>
                         <div className="w-24 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#F9D423] mx-auto rounded-full"></div>
                     </div>

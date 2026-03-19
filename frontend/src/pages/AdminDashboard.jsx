@@ -36,7 +36,7 @@ const AdminDashboard = () => {
                 accent: 'border-l-[#2C3E50]'
             },
             {
-                title: 'Team Cards on Home',
+                title: 'Mentor Cards on Home',
                 value: content.home.team.members.length,
                 icon: Home,
                 accent: 'border-l-[#D4AF37]'
