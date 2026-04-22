@@ -3,3 +3,5 @@ node_modules/
 pdf_output.txt
 pdf_output_utf8.txt
 read_pdf.js
+.local-mariadb/
+mysql-local/

@@ -26,7 +26,11 @@ export const useSiteContent = () => {
         } catch (requestError) {
             console.error('Failed to load site content:', requestError);
             setContent(cloneSiteContent(defaultSiteContent));
-            setError('Could not load saved site content. Showing default content.');
+            setError(
+                requestError instanceof Error
+                    ? requestError.message
+                    : 'Could not load saved site content. Showing default content.'
+            );
         } finally {
             setLoading(false);
         }
@@ -45,7 +49,11 @@ export const useSiteContent = () => {
             setError('');
         } catch (requestError) {
             console.error('Failed to save site content:', requestError);
-            setError('Could not save changes. Please try again.');
+            setError(
+                requestError instanceof Error
+                    ? requestError.message
+                    : 'Could not save changes. Please try again.'
+            );
             throw requestError;
         } finally {
             setSaving(false);

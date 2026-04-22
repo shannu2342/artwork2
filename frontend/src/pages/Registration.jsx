@@ -38,7 +38,7 @@ const Registration = () => {
 
             if (!response.ok) {
                 const errorText = await response.text();
-                console.error('Registration request failed:', response.status, errorText);
+                console.error('Registration API request failed:', response.status, errorText);
                 setStatus('error');
                 return;
             }
@@ -55,7 +55,7 @@ const Registration = () => {
             });
             setTimeout(() => setStatus('idle'), 5000);
         } catch (error) {
-            console.error('Registration failed:', error);
+            console.error('Registration submission failed:', error);
             setStatus('error');
         }
     };

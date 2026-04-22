@@ -270,7 +270,7 @@ const AdminHomeContent = () => {
             <div className="flex items-center justify-center py-24">
                 <div className="text-center">
                     <RefreshCw className="w-8 h-8 animate-spin text-[#D4AF37] mx-auto" />
-                    <p className="mt-3 text-gray-600 font-medium">Loading Home content from MongoDB...</p>
+                    <p className="mt-3 text-gray-600 font-medium">Loading Home content from MySQL...</p>
                 </div>
             </div>
         );
@@ -283,7 +283,7 @@ const AdminHomeContent = () => {
                     <div>
                         <h1 className="text-2xl font-black">Home Section Manager</h1>
                         <p className="text-gray-200 mt-1 text-sm">
-                            Edit text and images for the full Home page. Each save is sent to Node.js/Express and stored in MongoDB.
+                            Edit text and images for the full Home page. Each save is sent to Node.js/Express and stored in MySQL.
                         </p>
                         <p className="text-xs mt-2 text-gray-300">Last saved: {lastSavedLabel}</p>
                     </div>
@@ -314,7 +314,7 @@ const AdminHomeContent = () => {
                         </Link>
                     </div>
                 </div>
-                {saving ? <p className="text-xs text-[#F9D423] mt-3">Saving to MongoDB...</p> : null}
+                {saving ? <p className="text-xs text-[#F9D423] mt-3">Saving to MySQL...</p> : null}
                 {error ? <p className="text-xs text-red-200 mt-2">{error}</p> : null}
             </div>
 

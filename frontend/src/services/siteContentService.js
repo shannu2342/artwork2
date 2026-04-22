@@ -1,21 +1,20 @@
-const normalizeApiBase = (rawBase) => {
-    let cleaned = (rawBase || 'http://localhost:5000').replace(/\/+$/, '');
-
-    if (cleaned.endsWith('/api/content')) {
-        cleaned = cleaned.replace(/\/api\/content$/, '/api');
-        return cleaned;
-    }
-
-    if (cleaned.endsWith('/content')) {
-        cleaned = cleaned.replace(/\/content$/, '');
-    }
-
-    return cleaned.endsWith('/api') ? cleaned : `${cleaned}/api`;
-};
-
-const API_BASE_URL = normalizeApiBase(import.meta.env.VITE_API_BASE_URL);
+import { buildAuthHeaders } from './adminAuthService';
+import { API_BASE_URL } from './apiBase';
 
 const siteContentUrl = (key) => `${API_BASE_URL}/site-content/${key}`;
+
+const getErrorMessage = async (response, fallbackMessage) => {
+    try {
+        const payload = await response.json();
+        if (payload?.error && typeof payload.error === 'string') {
+            return payload.error;
+        }
+    } catch (_error) {
+        // ignore and use fallback
+    }
+
+    return fallbackMessage;
+};
 
 export const fetchSiteContent = async (key) => {
     const response = await fetch(siteContentUrl(key));
@@ -25,7 +24,7 @@ export const fetchSiteContent = async (key) => {
     }
 
     if (!response.ok) {
-        throw new Error('Failed to fetch site content');
+        throw new Error(await getErrorMessage(response, 'Failed to fetch site content'));
     }
 
     const payload = await response.json();
@@ -35,14 +34,14 @@ export const fetchSiteContent = async (key) => {
 export const saveSiteContent = async (key, data) => {
     const response = await fetch(siteContentUrl(key), {
         method: 'PUT',
-        headers: {
+        headers: buildAuthHeaders({
             'Content-Type': 'application/json'
-        },
+        }),
         body: JSON.stringify({ data })
     });
 
     if (!response.ok) {
-        throw new Error('Failed to save site content');
+        throw new Error(await getErrorMessage(response, 'Failed to save site content'));
     }
 
     return response.json();
@@ -54,35 +53,37 @@ export const uploadSiteImage = async (file) => {
 
     const response = await fetch(`${API_BASE_URL}/uploads/image`, {
         method: 'POST',
+        headers: buildAuthHeaders(),
         body: formData
     });
 
     if (!response.ok) {
-        let errorMessage = 'Failed to upload image';
-
-        try {
-            const payload = await response.json();
-            if (payload?.error) {
-                errorMessage = payload.error;
-            }
-        } catch (_error) {
-            // Keep generic message for non-JSON responses.
-        }
-
-        throw new Error(errorMessage);
+        throw new Error(await getErrorMessage(response, 'Failed to upload image'));
     }
 
     return response.json();
 };
 
 export const fetchRegistrations = async () => {
-    const response = await fetch(`${API_BASE_URL}/content`);
+    const response = await fetch(`${API_BASE_URL}/content?type=${encodeURIComponent('Registration')}`, {
+        headers: buildAuthHeaders()
+    });
     if (!response.ok) {
-        throw new Error('Failed to fetch registrations');
+        throw new Error(await getErrorMessage(response, 'Failed to fetch registrations'));
     }
 
-    const records = await response.json();
-    return records.filter((item) => item.type === 'Registration');
+    return response.json();
+};
+
+export const fetchContacts = async () => {
+    const response = await fetch(`${API_BASE_URL}/content?type=${encodeURIComponent('Contact')}&limit=50`, {
+        headers: buildAuthHeaders()
+    });
+    if (!response.ok) {
+        throw new Error(await getErrorMessage(response, 'Failed to fetch contacts'));
+    }
+
+    return response.json();
 };
 
 export const API_BASE = API_BASE_URL;

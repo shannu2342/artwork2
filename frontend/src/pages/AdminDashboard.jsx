@@ -2,13 +2,16 @@ import { useEffect, useMemo, useState } from 'react';
 import { CalendarDays, ExternalLink, Home, Image as ImageIcon, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useSiteContent } from '../hooks/useSiteContent';
-import { fetchRegistrations } from '../services/siteContentService';
+import { fetchContacts, fetchRegistrations } from '../services/siteContentService';
 
 const AdminDashboard = () => {
     const { content } = useSiteContent();
     const [registrations, setRegistrations] = useState([]);
     const [loadingRegistrations, setLoadingRegistrations] = useState(true);
     const [registrationError, setRegistrationError] = useState('');
+    const [contacts, setContacts] = useState([]);
+    const [loadingContacts, setLoadingContacts] = useState(true);
+    const [contactError, setContactError] = useState('');
 
     useEffect(() => {
         const loadRegistrations = async () => {
@@ -17,14 +20,36 @@ const AdminDashboard = () => {
                 const rows = await fetchRegistrations();
                 setRegistrations(rows);
                 setRegistrationError('');
-            } catch (_error) {
-                setRegistrationError('Could not load registrations from API.');
+            } catch (requestError) {
+                setRegistrationError(
+                    requestError instanceof Error
+                        ? requestError.message
+                        : 'Could not load registrations from API.'
+                );
             } finally {
                 setLoadingRegistrations(false);
             }
         };
 
+        const loadContacts = async () => {
+            setLoadingContacts(true);
+            try {
+                const rows = await fetchContacts();
+                setContacts(rows);
+                setContactError('');
+            } catch (requestError) {
+                setContactError(
+                    requestError instanceof Error
+                        ? requestError.message
+                        : 'Could not load contact enquiries from API.'
+                );
+            } finally {
+                setLoadingContacts(false);
+            }
+        };
+
         void loadRegistrations();
+        void loadContacts();
     }, []);
 
     const stats = useMemo(
@@ -46,9 +71,15 @@ const AdminDashboard = () => {
                 value: content.home.gallery.items.length,
                 icon: ImageIcon,
                 accent: 'border-l-[#F9D423]'
+            },
+            {
+                title: 'Contact Enquiries',
+                value: contacts.length,
+                icon: CalendarDays,
+                accent: 'border-l-emerald-500'
             }
         ],
-        [content.home.gallery.items.length, content.home.team.members.length, registrations.length]
+        [contacts.length, content.home.gallery.items.length, content.home.team.members.length, registrations.length]
     );
 
     return (
@@ -56,11 +87,11 @@ const AdminDashboard = () => {
             <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                 <h1 className="text-2xl font-black text-[#2C3E50]">Admin Overview</h1>
                 <p className="text-sm text-gray-500 mt-1">
-                    This dashboard is connected to Node.js + Express + MongoDB. Use Home Content to edit website text and photos.
+                    This dashboard is connected to Node.js + Express + MySQL. Use Home Content to edit website text and photos.
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
                 {stats.map((stat) => (
                     <div
                         key={stat.title}
@@ -160,6 +191,56 @@ const AdminDashboard = () => {
 
                     {!loadingRegistrations && !registrationError && registrations.length === 0 ? (
                         <p className="text-sm text-gray-500">No registrations yet.</p>
+                    ) : null}
+                </div>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50">
+                    <h2 className="text-lg font-bold text-[#2C3E50]">Recent Contact Enquiries</h2>
+                    <CalendarDays className="w-4 h-4 text-gray-500" />
+                </div>
+
+                <div className="p-6 overflow-x-auto">
+                    {loadingContacts ? (
+                        <p className="text-sm text-gray-500">Loading contact enquiries...</p>
+                    ) : null}
+
+                    {contactError ? (
+                        <p className="text-sm text-red-600">{contactError}</p>
+                    ) : null}
+
+                    {!loadingContacts && !contactError ? (
+                        <table className="w-full text-left border-collapse min-w-[760px]">
+                            <thead>
+                                <tr className="border-b border-gray-200">
+                                    <th className="pb-3 text-xs font-semibold text-gray-600 uppercase">Name</th>
+                                    <th className="pb-3 text-xs font-semibold text-gray-600 uppercase">Subject</th>
+                                    <th className="pb-3 text-xs font-semibold text-gray-600 uppercase">Phone</th>
+                                    <th className="pb-3 text-xs font-semibold text-gray-600 uppercase">Email</th>
+                                    <th className="pb-3 text-xs font-semibold text-gray-600 uppercase">Created</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {contacts.slice(0, 8).map((row) => (
+                                    <tr key={row._id} className="border-b border-gray-100 hover:bg-gray-50">
+                                        <td className="py-3 text-sm text-gray-800 font-medium">
+                                            {row.data?.fullName || 'Unknown'}
+                                        </td>
+                                        <td className="py-3 text-sm text-gray-600">{row.data?.subject || '-'}</td>
+                                        <td className="py-3 text-sm text-gray-600">{row.data?.phone || '-'}</td>
+                                        <td className="py-3 text-sm text-gray-600">{row.data?.email || '-'}</td>
+                                        <td className="py-3 text-sm text-gray-500">
+                                            {new Date(row.createdAt).toLocaleDateString()}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    ) : null}
+
+                    {!loadingContacts && !contactError && contacts.length === 0 ? (
+                        <p className="text-sm text-gray-500">No contact enquiries yet.</p>
                     ) : null}
                 </div>
             </div>

@@ -7,6 +7,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import Login from './pages/Login';
 import AdminHomeContent from './pages/AdminHomeContent';
 import ContactUs from './pages/ContactUs';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         </Route>
 
         <Route path="/login" element={<Login />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );

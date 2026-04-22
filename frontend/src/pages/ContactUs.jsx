@@ -50,7 +50,7 @@ const ContactUs = () => {
 
             if (!response.ok) {
                 const errorText = await response.text();
-                console.error('Registration request failed:', response.status, errorText);
+                console.error('Contact form request failed:', response.status, errorText);
                 setStatus('error');
                 return;
             }
@@ -67,7 +67,7 @@ const ContactUs = () => {
 
             setTimeout(() => setStatus('idle'), 5000);
         } catch (error) {
-            console.error('Registration failed:', error);
+            console.error('Contact form submission failed:', error);
             setStatus('error');
         }
     };

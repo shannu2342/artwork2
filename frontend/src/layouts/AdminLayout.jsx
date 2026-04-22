@@ -1,5 +1,7 @@
-import { Outlet, Navigate, Link, NavLink, useLocation } from 'react-router-dom';
+import { Outlet, Navigate, Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Eye, Home, LayoutDashboard, LogOut } from 'lucide-react';
+import { fetchAdminProfile, getAdminToken, logoutAdmin } from '../services/adminAuthService';
 
 const navItemClass = ({ isActive }) =>
     `flex items-center px-4 py-3 rounded-lg transition ${
@@ -10,16 +12,47 @@ const navItemClass = ({ isActive }) =>
 
 const AdminLayout = () => {
     const location = useLocation();
+    const navigate = useNavigate();
+    const [checkingAuth, setCheckingAuth] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(Boolean(getAdminToken()));
 
-    const isAuthenticated = localStorage.getItem('adminAuth') === 'true';
+    useEffect(() => {
+        const verifySession = async () => {
+            const token = getAdminToken();
+            if (!token) {
+                setIsAuthenticated(false);
+                setCheckingAuth(false);
+                return;
+            }
 
-    if (!isAuthenticated) {
-        return <Navigate to="/login" />;
+            try {
+                await fetchAdminProfile();
+                setIsAuthenticated(true);
+            } catch (_error) {
+                setIsAuthenticated(false);
+            } finally {
+                setCheckingAuth(false);
+            }
+        };
+
+        void verifySession();
+    }, []);
+
+    if (checkingAuth) {
+        return (
+            <div className="min-h-[100dvh] bg-gray-100 flex items-center justify-center">
+                <p className="text-gray-600 font-medium">Checking admin session...</p>
+            </div>
+        );
     }
 
-    const handleLogout = () => {
-        localStorage.removeItem('adminAuth');
-        window.location.href = '/login';
+    if (!isAuthenticated) {
+        return <Navigate to="/login" replace />;
+    }
+
+    const handleLogout = async () => {
+        await logoutAdmin();
+        navigate('/login', { replace: true });
     };
 
     const pageTitle = location.pathname.includes('/admin/home-content')
